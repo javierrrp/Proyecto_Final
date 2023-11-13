@@ -38,6 +38,31 @@ matriz = [
     [(238, 249, 118), (238, 249, 118), (238, 249, 118), (255, 255, 255 ), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
     [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (191, 191, 191), (238, 249, 118), (238, 249, 118), (191, 191, 191)],]
 
+ciclos = 0
+#Clases 
+class Ambiente:
+    class lluvia:
+        def __init__(self):
+            self.x = ra.randint(0, 850)
+            self.y = ra.randint(-200, -20)
+            self.yspeed = ra.uniform(0.2, 5)
+            self.tamaño = ra.randint(10, 20)
+
+        def caida(self):
+            self.y += self.yspeed
+            self.yspeed += 10
+
+            if self.y > 500:
+                self.y = ra.randint(-200, -20)
+                self.yspeed = ra.uniform(5, 1)
+
+        def show(self, screen):
+            pygame.draw.line(screen, (0, 191, 255), (self.x, self.y), (self.x, self.y+self.tamaño), 2)
+
+
+
+
+gotas = [Ambiente.lluvia() for _ in range(100)]
 
 
 
@@ -57,6 +82,14 @@ while True:
         pygame.draw.line(screen, (0, 0, 0), (0, i * celda), (800, i * celda), 2)
     for j in range(1, len(matriz[0])):
         pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 600), 2)
+
+
+    ciclos += 1
+    if ciclos >= 100:   
+        for gota in gotas:
+            gota.caida()
+            gota.show(screen)
+            
 
 
 
