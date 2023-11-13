@@ -1,0 +1,97 @@
+import pygame, sys
+from pygame.locals import *
+import random as ra
+
+# Inicializar Pygame
+pygame.init()
+
+# Crear ventana de Simulador
+ANCHO, ALTO = 800, 480
+VENTANA = pygame.display.set_mode((ANCHO, ALTO))
+pygame.display.set_caption('Proyecto Final (Simulador Sabana)')
+ICONO = pygame.image.load('Logo.ico')
+pygame.display.set_icon(ICONO)
+
+# Tamaño de la celda
+CELDA = 40
+
+# Colores de las celdas
+MATRIZ = [
+    [(238, 249, 118) for _ in range(20)] for _ in range(12)
+]
+
+# Direcciones para moverse (derecha, abajo, izquierda, arriba)
+DIRECCIONES = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+DIRECCION_ACTUAL = 0  # Índice de la dirección actual
+
+# Cargar imagen del perro
+PERRO_IMAGEN = pygame.image.load('perro.png')
+PERRO_RECT = PERRO_IMAGEN.get_rect()
+PERRO_X, PERRO_Y = 0, 0
+
+# Velocidad del perro (en milisegundos)
+VELOCIDAD_PERRO = 21  # ms de retraso entre movimientos
+
+def cambiar_direccion():
+    global DIRECCION_ACTUAL
+    DIRECCION_ACTUAL = (DIRECCION_ACTUAL + 1) % 4
+
+ciclos = 0
+
+# Clases
+class Lluvia:
+    def __init__(self):
+        self.x = ra.randint(0, 850)
+        self.y = ra.randint(-200, -20)
+        self.yspeed = ra.uniform(0.2, 5)
+        self.tamaño = ra.randint(10, 20)
+
+    def caida(self):
+        self.y += self.yspeed
+        self.yspeed += 10
+
+        if self.y > 500:
+            self.y = ra.randint(-200, -20)
+            self.yspeed = ra.uniform(5, 1)
+
+    def show(self, screen):
+        pygame.draw.line(screen, (0, 191, 255), (self.x, self.y), (self.x, self.y + self.tamaño), 2)
+
+gotas = [Lluvia() for _ in range(100)]
+
+reloj = pygame.time.Clock()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    NUEVA_X = PERRO_X + DIRECCIONES[DIRECCION_ACTUAL][0]
+    NUEVA_Y = PERRO_Y + DIRECCIONES[DIRECCION_ACTUAL][1]
+
+    if 0 <= NUEVA_X < 20 and 0 <= NUEVA_Y < 12:
+        PERRO_X, PERRO_Y = NUEVA_X, NUEVA_Y
+    else:
+        cambiar_direccion()
+
+    PERRO_RECT.topleft = (PERRO_X * CELDA, PERRO_Y * CELDA)
+
+    for i, fila in enumerate(MATRIZ):
+        for j, color in enumerate(fila):
+            pygame.draw.rect(VENTANA, color, (j * CELDA, i * CELDA, CELDA, CELDA))
+
+    for i in range(1, 12):
+        pygame.draw.line(VENTANA, (0, 0, 0), (0, i * CELDA), (800, i * CELDA), 2)
+    for j in range(1, 20):
+        pygame.draw.line(VENTANA, (0, 0, 0), (j * CELDA, 0), (j * CELDA, 600), 2)
+
+    for gota in gotas:
+        gota.caida()
+        gota.show(VENTANA)
+
+    VENTANA.blit(PERRO_IMAGEN, PERRO_RECT)
+
+    pygame.display.flip()
+
+    reloj.tick(VELOCIDAD_PERRO)
