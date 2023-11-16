@@ -1,6 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 import random as ra
+import time
 
 
 #Inicializar Pygame
@@ -99,10 +100,9 @@ while True:
         pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 600), 2)
 
     ciclos += 1
-    if ciclos > 1000:
+    if ciclos > 8950:
         for gota in gotas:
             gota.mostrar(screen)
-
 
 
         
