@@ -20,6 +20,10 @@ pygame.display.set_icon(icono)
 #tamaño de la celda
 celda = 40
 
+
+#ciclos
+lluvia = False
+
 #colores de las celkdad
 matriz = [
     [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
@@ -38,17 +42,21 @@ matriz = [
     [(238, 249, 118), (238, 249, 118), (238, 249, 118), (255, 255, 255 ), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
     [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (191, 191, 191), (238, 249, 118), (238, 249, 118), (191, 191, 191)],]
 
-ciclos = 0
 #Clases 
 class Ambiente:
     class lluvia:
+        #Constructor
         def __init__(self):
+            #Ancho de la gota
             self.x = ra.randint(0, 850)
+            #Largo de la gota
             self.y = ra.randint(-200, -20)
+            #Velocidad al caer en eje y
             self.yspeed = ra.uniform(0.2, 5)
             self.tamaño = ra.randint(10, 20)
 
-        def caida(self):
+        def mostrar(self, screen):
+
             self.y += self.yspeed
             self.yspeed += 10
 
@@ -56,22 +64,29 @@ class Ambiente:
                 self.y = ra.randint(-200, -20)
                 self.yspeed = ra.uniform(5, 1)
 
-        def show(self, screen):
             pygame.draw.line(screen, (0, 191, 255), (self.x, self.y), (self.x, self.y+self.tamaño), 2)
+    
 
 
 
 
-gotas = [Ambiente.lluvia() for _ in range(100)]
+#Crear cantidad de gotas
+gotas = [Ambiente.lluvia() for _ in range(200)]
 
 
 
+
+
+ciclos = 0
+
+#Bucle del Programa
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
  
+    #Dibujar la matriz
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             pygame.draw.rect(screen, matriz[i][j], (j * celda, i * celda, celda, celda))
@@ -83,13 +98,10 @@ while True:
     for j in range(1, len(matriz[0])):
         pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 600), 2)
 
-
     ciclos += 1
-    if ciclos >= 100:   
+    if ciclos > 1000:
         for gota in gotas:
-            gota.caida()
-            gota.show(screen)
-            
+            gota.mostrar(screen)
 
 
 
