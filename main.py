@@ -66,6 +66,9 @@ class Ambiente:
                 self.yspeed = ra.uniform(5, 1)
 
             pygame.draw.line(screen, (0, 191, 255), (self.x, self.y), (self.x, self.y+self.tamaño), 2)
+
+
+
     
 
 
@@ -100,7 +103,7 @@ while True:
         pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 600), 2)
 
     ciclos += 1
-    if ciclos > 8950:
+    if ciclos > 12352:
         for gota in gotas:
             gota.mostrar(screen)
 
