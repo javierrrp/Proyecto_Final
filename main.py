@@ -44,6 +44,29 @@ matriz = [
     [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (191, 191, 191), (238, 249, 118), (238, 249, 118), (191, 191, 191)],]
 
 #Clases 
+class Organismo:
+    def __init__(self, posicion, vida, energia, velocidad):
+        self.posicion = posicion
+        self.vida = vida
+        self.energia = energia
+        self.velocidad = velocidad
+
+class Animal(Organismo):
+    def __init__(self, posicion, vida, energia, velocidad, dieta, especies):
+        super().__init__(posicion, vida, energia, velocidad)
+        self.dieta = dieta
+        self.especies = especies
+
+    def cazar():
+        return
+    def descomposicion():
+        return
+
+    
+
+
+
+
 class Ambiente:
     class lluvia:
         #Constructor
