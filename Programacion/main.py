@@ -1,7 +1,10 @@
 import pygame, sys
 from pygame.locals import *
+from pygame.sprite import Sprite
 import random as ra
 import time
+import ctypes as ct
+from leon import Leon
 
 
 #Inicializar Pygame
@@ -14,6 +17,7 @@ screen = pygame.display.set_mode((800,600))
 pygame.display.set_caption('Proyecto Final (Simulador Sabana)')
 icono = pygame.image.load('Logo.ico')
 pygame.display.set_icon(icono)
+
 
 
 
@@ -44,6 +48,15 @@ matriz = [
     [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (191, 191, 191), (238, 249, 118), (238, 249, 118), (191, 191, 191)],]
 
 #Clases 
+
+
+class eAnimal(ct.Structure):
+ _fields_ = [
+             ('nF',ct.c_short),('nX',ct.c_short),('nY',ct.c_short),
+	         ('nR',ct.c_short),('dX',ct.c_short),('dY',ct.c_short),
+	         ('nV',ct.c_short)
+            ]
+ 
 class Organismo:
     def __init__(self, posicionx, posiciony, vida, energia, velocidad):
         self.posicionx = posicionx
@@ -58,6 +71,7 @@ class Animal(Organismo):
         self.dieta = dieta
         self.especies = especies
         self.imagen = imagen
+
 
     def cazar():
         return
@@ -91,9 +105,6 @@ class Ambiente:
                 self.yspeed = ra.uniform(5, 1)
 
             pygame.draw.line(screen, (0, 191, 255), (self.x, self.y), (self.x, self.y+self.tamaño), 2)
-
-
-
     
 
 
@@ -102,11 +113,13 @@ class Ambiente:
 #Crear cantidad de gotas
 gotas = [Ambiente.lluvia() for _ in range(200)]
 ciclos = 0
-
+leon = Leon()
 
 #Creacion animales
+all_sprites = pygame.sprite.Group()
 
-Leon = Animal(200, 150, 100, 50, 12, "Carnivoro", "a", pygame.image.load("Animales/leon.png"))
+leon = Leon()
+all_sprites.add(leon)
 
 #Bucle del Programa
 while True:
@@ -114,6 +127,8 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
+
  
     #Dibujar la matriz
     for i in range(len(matriz)):
@@ -126,17 +141,19 @@ while True:
         pygame.draw.line(screen, (0, 0, 0), (0, i * celda), (800, i * celda), 2)
     for j in range(1, len(matriz[0])):
         pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 600), 2)
+    
 
-
-
-    #Cargar Imagenes
-    screen.blit(Leon.imagen, (Leon.posicionx, Leon.posiciony))    
+    
+  
 
     ciclos += 1
     if ciclos > 12352:
         for gota in gotas:
             gota.mostrar(screen)
+    
+    
 
 
-        
+    all_sprites.update()
+    all_sprites.draw(screen)
     pygame.display.flip()
