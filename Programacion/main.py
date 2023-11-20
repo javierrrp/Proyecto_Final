@@ -3,8 +3,7 @@ from pygame.locals import *
 from pygame.sprite import Sprite
 import random as ra
 import time
-import ctypes as ct
-from leon import Leon
+from animal import *
 
 
 #Inicializar Pygame
@@ -50,12 +49,6 @@ matriz = [
 #Clases 
 
 
-class eAnimal(ct.Structure):
- _fields_ = [
-             ('nF',ct.c_short),('nX',ct.c_short),('nY',ct.c_short),
-	         ('nR',ct.c_short),('dX',ct.c_short),('dY',ct.c_short),
-	         ('nV',ct.c_short)
-            ]
  
 class Organismo:
     def __init__(self, posicionx, posiciony, vida, energia, velocidad):
@@ -113,13 +106,12 @@ class Ambiente:
 #Crear cantidad de gotas
 gotas = [Ambiente.lluvia() for _ in range(200)]
 ciclos = 0
-leon = Leon()
+leon = Leon("Carne", "Felino", "Mamifero", "sada", "dsa")
+cebra = Cebra("Carne", "Felino", "Mamifero", "sada", "dsa")
 
 #Creacion animales
 all_sprites = pygame.sprite.Group()
-
-leon = Leon()
-all_sprites.add(leon)
+all_sprites.add(leon, cebra)
 
 #Bucle del Programa
 while True:
