@@ -80,9 +80,9 @@ class Ambiente:
     class lluvia:
         #Constructor
         def __init__(self):
-            #Ancho de la gota
+            #posicionx 
             self.x = ra.randint(0, 850)
-            #Largo de la gota
+            #posiciony
             self.y = ra.randint(-200, -20)
             #Velocidad al caer en eje y
             self.yspeed = ra.uniform(0.2, 5)
@@ -106,12 +106,19 @@ class Ambiente:
 #Crear cantidad de gotas
 gotas = [Ambiente.lluvia() for _ in range(200)]
 ciclos = 0
-leon = Leon("Carne", "Felino", "Mamifero", "sada", "dsa")
-cebra = Cebra("Carne", "Felino", "Mamifero", "sada", "dsa")
+
+#Creamos un par de animales
+leon = Leon(100, 30, "Carnivoro", "sada", "Mamifero")
+leon2 = Leon(100, 40, "Carnivoro", "sada", "Mamifero")
+cebra = Cebra(100, 20, "Herviboro", "sada")
+cerdo = Cerdo(100, 25, "Omnivoro", "Mamifero")
+jirafa = Jirafa(100, 10, "Herviboro", "Mamifero")
+elefante = Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797")
+
 
 #Creacion animales
 all_sprites = pygame.sprite.Group()
-all_sprites.add(leon, cebra)
+all_sprites.add(leon, leon2, cebra, cerdo, jirafa, elefante)
 
 #Bucle del Programa
 while True:
