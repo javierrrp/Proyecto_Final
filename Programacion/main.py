@@ -3,6 +3,7 @@ from pygame.locals import *
 from pygame.sprite import Sprite
 import random as ra
 import time
+from organismo import *
 from animal import *
 
 
@@ -50,27 +51,6 @@ matriz = [
 
 
  
-class Organismo:
-    def __init__(self, posicionx, posiciony, vida, energia, velocidad):
-        self.posicionx = posicionx
-        self.posiciony = posiciony
-        self.vida = vida
-        self.energia = energia
-        self.velocidad = velocidad
-
-class Animal(Organismo):
-    def __init__(self, posicionx, posiciony, vida, energia, velocidad, dieta, especies, imagen):
-        super().__init__(posicionx, posiciony, vida, energia, velocidad)
-        self.dieta = dieta
-        self.especies = especies
-        self.imagen = imagen
-
-
-    def cazar():
-        return
-    def descomposicion():
-        return
-
     
 
 
@@ -108,17 +88,22 @@ gotas = [Ambiente.lluvia() for _ in range(200)]
 ciclos = 0
 
 #Creamos un par de animales
-leon = Leon(100, 30, "Carnivoro", "sada", "Mamifero")
-leon2 = Leon(100, 40, "Carnivoro", "sada", "Mamifero")
+leon = Leon(100, 30, "Carnivoro", "sada")
+leon2 = Leon(100, 40, "Carnivoro", "sada")
 cebra = Cebra(100, 20, "Herviboro", "sada")
 cerdo = Cerdo(100, 25, "Omnivoro", "Mamifero")
 jirafa = Jirafa(100, 10, "Herviboro", "Mamifero")
 elefante = Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797")
-
+leopardo = Leopardo(100, 40, "Carnivoro", "sada", "s")
+suricata = Suricata(100, 40, "Carnivoro", "sada", "s")
+jabali = Jabali(100, 40, "Carnivoro", "sada", "s")
+                    
 
 #Creacion animales
 all_sprites = pygame.sprite.Group()
-all_sprites.add(leon, leon2, cebra, cerdo, jirafa, elefante)
+all_sprites.add(leon, leon2, cebra, cerdo, jirafa, elefante, leopardo, suricata, jabali)
+lista = [leon, leon2, cebra, cerdo, jirafa, elefante, leopardo, suricata, jabali]
+
 
 #Bucle del Programa
 while True:
@@ -142,6 +127,7 @@ while True:
         pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 600), 2)
     
 
+
     
   
 
@@ -149,8 +135,15 @@ while True:
     if ciclos > 12352:
         for gota in gotas:
             gota.mostrar(screen)
-    
-    
+
+    for sprite in lista:
+        colisiones = pygame.sprite.spritecollide(sprite, lista, False)
+        for colision in colisiones:
+            if isinstance(colision, Animal) and isinstance(sprite, Animal):
+                if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
+                    sprite.kill()
+                    
+
 
 
     all_sprites.update()
