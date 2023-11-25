@@ -26,8 +26,8 @@ class Leon(Animal):
         self.vida = 100
         self.image = pygame.image.load("Animales/leon.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0, 25) * 40  # Posición X en una celda de 40x40
-        self.rect.y = ra.randint(0, 19) * 40
+        self.rect.x = ra.randint(0,974)
+        self.rect.y = ra.randint(0,768)
         self.speed = 1  # Velocidad muy baja para movimiento lento
         self.subpix = 6
         self.subx = self.rect.x * self.subpix + 3  # Ajuste para centrar en la casilla
@@ -53,10 +53,12 @@ class Leon(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
+        elif self.direction == "left" and self.rect.x > 768 + 300:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        else: 
+            self.direction = ra.choice(["up", "down", "left", "right"])
 
 
         self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
@@ -68,8 +70,8 @@ class Leona(Animal):
         self.vida = 100
         self.image = pygame.image.load("Animales/leona.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0, 25) * 40  # Posición X en una celda de 40x40
-        self.rect.y = ra.randint(0, 19) * 40
+        self.rect.x = ra.randint(0,974)
+        self.rect.y = ra.randint(0,768)
         self.speed = 1  # Velocidad muy baja para movimiento lento
         self.subpix = 6
         self.subx = self.rect.x * self.subpix + 3  # Ajuste para centrar en la casilla
@@ -95,9 +97,9 @@ class Leona(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
+        elif self.direction == "left" and self.rect.x > 768 + 300:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
 
@@ -113,7 +115,7 @@ class Cebra(Animal):
         self.vida = 100
         self.image = pygame.image.load("Animales/cebra.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,1024)
+        self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
         self.speed = 1
         self.subx = self.rect.x * 6  
@@ -140,9 +142,9 @@ class Cebra(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
+        elif self.direction == "left" and self.rect.x > 768 + 300:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
         self.rect.x = round(self.subx / self.subpix)
@@ -153,7 +155,7 @@ class Cerdo(Animal):
         self.vida = 100
         self.image = pygame.image.load("Animales/cerdo.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,1024)
+        self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
         self.speed = 1
         self.subx = self.rect.x * 6  
@@ -180,9 +182,9 @@ class Cerdo(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
+        elif self.direction == "left" and self.rect.x > 768 + 300:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
         self.rect.x = round(self.subx / self.subpix)
@@ -194,7 +196,7 @@ class Jirafa(Animal):
         self.vida = 100
         self.image = pygame.image.load("Animales/jirafa.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,1024)
+        self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
         self.speed = 1
         self.subx = self.rect.x * 6  
@@ -221,9 +223,9 @@ class Jirafa(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
+        elif self.direction == "left" and self.rect.x > 768 + 300:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
         self.rect.x = round(self.subx / self.subpix)
@@ -235,7 +237,7 @@ class Elefante(Animal):
         self.vida = 100
         self.image = pygame.image.load("Animales/elefante.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,1024)
+        self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
         self.speed = 1
         self.subx = self.rect.x * 6  
@@ -262,9 +264,9 @@ class Elefante(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
+        elif self.direction == "left" and self.rect.x > 768 + 300:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
         self.rect.x = round(self.subx / self.subpix)
@@ -277,7 +279,7 @@ class Jabali(Animal):
         self.vida = 100
         self.image = pygame.image.load("Animales/jabali.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,1024)
+        self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
         self.speed = 1
         self.subx = self.rect.x * 6  
@@ -304,9 +306,9 @@ class Jabali(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
+        elif self.direction == "left" and self.rect.x > 768 + 300:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
         self.rect.x = round(self.subx / self.subpix)
@@ -319,7 +321,7 @@ class Leopardo(Animal):
         self.vida = 100
         self.image = pygame.image.load("Animales/leopardo.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,1024)
+        self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
         self.speed = 1
         self.subx = self.rect.x * 6  
@@ -346,9 +348,9 @@ class Leopardo(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
+        elif self.direction == "left" and self.rect.x > 768 + 300:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
         self.rect.x = round(self.subx / self.subpix)
@@ -361,7 +363,7 @@ class Suricata(Animal):
         self.vida = 100
         self.image = pygame.image.load("Animales/suricata.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,1024)
+        self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
         self.speed = 1
         self.subx = self.rect.x * 6  
@@ -388,9 +390,9 @@ class Suricata(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
+        elif self.direction == "left" and self.rect.x > 768 + 300:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
         self.rect.x = round(self.subx / self.subpix)

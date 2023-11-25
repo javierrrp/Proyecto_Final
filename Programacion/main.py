@@ -77,6 +77,15 @@ class Panel:
     def pintar(self):
         a = pygame.Rect(self.ubicacionx, self.ubicaciony, self.ancho, self.a)
         screen.fill((100, 100, 100), a)
+    def botones(self):
+        # lluvia
+        self.lluvia = Rect(1040, 400, 150, 50)
+        self.myFont = pygame.font.SysFont("Calibri", 30)
+        self.texto = self.myFont.render("Lluvia", True, (220,220,220))
+        pygame.draw.rect(screen, (70, 189, 34), self.lluvia, 0)
+        screen.blit(self.texto, (1080, 400))
+        if self.lluvia.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(screen, (70, 189, 34), self.lluvia, 0)
 
 
 
@@ -95,7 +104,7 @@ class Ambiente:
             self.tamaño = ra.randint(10, 20)
             
 
-        def mostrar(self, screen):
+        def mostrar(self):
 
             self.y += self.yspeed
             self.yspeed += 10
@@ -114,7 +123,7 @@ class Ambiente:
 
 
 
-gotas = [Ambiente.lluvia() for _ in range(200)]
+gotas = [Ambiente.lluvia() for _ in range(250)]
 ciclos = 0
 
 #Creamos un par de animales
@@ -148,7 +157,6 @@ all_sprites.add(lista, listaplantas)
 
 
 dibujado = Panel()
-
 
 
 #Banderas de Eventos Climaticos
@@ -187,9 +195,6 @@ while True:
     if ciclos >= 1000:
         hora += 1
         ciclos = 0
-        leon.vida -= 50
-        if leon.vida == 0:
-            leon.kill()
 
     
     if hora > 100 and not llover:
@@ -199,7 +204,7 @@ while True:
         
     if llover:
         for gota in gotas:
-            gota.mostrar(screen)
+            gota.mostrar()
 
     
     for sprite in lista:
@@ -209,12 +214,14 @@ while True:
                 if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
                     sprite.kill()
             
-    
+    if event.type == MOUSEBUTTONDOWN and event.button == 1:
+        llover = True
     
                     
     
 
     dibujado.pintar()
+    dibujado.botones()
     all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()
