@@ -215,10 +215,10 @@ while True:
                     sprite.kill()
             
     if event.type == MOUSEBUTTONDOWN and event.button == 1:
-        llover = True
-    
-                    
-    
+        if llover:
+            llover = False
+        else:
+            llover = True
 
     dibujado.pintar()
     dibujado.botones()
