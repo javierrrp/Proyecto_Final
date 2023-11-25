@@ -50,15 +50,59 @@ class Leon(Animal):
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 19 * 40:  # Límite inferior
+        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
         elif self.direction == "left" and self.rect.x > 0:
             self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 25 * 40:  # Límite derecho
+        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
             self.subx += self.speed
+
 
         self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
         self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
+
+class Leona(Animal):
+    def __init__(self, vida, energia, dieta, especies):
+        super().__init__(vida, energia, dieta, especies)
+        self.image = pygame.image.load("Animales/leona.png").convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = ra.randint(0, 25) * 40  # Posición X en una celda de 40x40
+        self.rect.y = ra.randint(0, 19) * 40
+        self.speed = 1  # Velocidad muy baja para movimiento lento
+        self.subpix = 6
+        self.subx = self.rect.x * self.subpix + 3  # Ajuste para centrar en la casilla
+        self.suby = self.rect.y * self.subpix + 3  # Ajuste para centrar en la casilla
+        self.rango = ra.randint(0, 500)
+        self.direction = None  # Dirección inicial
+
+    def update(self):
+        self.rango -= 1
+        if self.rango < 0:
+            self.rango = ra.randint(0, 500)
+            direction = ra.randint(1, 4)
+            if direction == 1:
+                self.direction = "up"  # Actualiza la dirección en self.direction
+            elif direction == 2:
+                self.direction = "down"
+            elif direction == 3:
+                self.direction = "left"
+            elif direction == 4:
+                self.direction = "right"
+
+        if self.direction == "up" and self.rect.y > 0:
+            self.suby -= self.speed
+        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
+            self.suby += self.speed
+        elif self.direction == "left" and self.rect.x > 0:
+            self.subx -= self.speed
+        elif self.direction == "right" and self.rect.x < 1024 - self.rect.width:
+            self.subx += self.speed
+
+
+        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
+        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
+
+
 
 
 class Cebra(Animal):
@@ -263,7 +307,7 @@ class Jabali(Animal):
 
 
 class Leopardo(Animal):
-    def __init__(self, vida, energia, velocidad, dieta, especies):
+    def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
         self.image = pygame.image.load("Animales/leopardo.png").convert_alpha()
         self.rect = self.image.get_rect()

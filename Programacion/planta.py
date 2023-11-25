@@ -39,7 +39,7 @@ class Planta3(Planta):
         super().__init__(posicionx, posiciony, vida, energia)
         self.image = pygame.image.load("Planta/b.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = posicionx * 40
-        self.rect.y = posiciony * 40
+        self.rect.x = posicionx * 40.6 
+        self.rect.y = posiciony * 40.6
         
         

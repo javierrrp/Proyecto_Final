@@ -13,6 +13,7 @@ pygame.init()
 #crear ventana de Simulador
 screen = pygame.display.set_mode((1024,768))
 
+
 #Icono y titulo
 pygame.display.set_caption('Proyecto Final (Simulador Sabana)')
 icono = pygame.image.load('Logo.ico')
@@ -57,6 +58,8 @@ matriz = [
 #Clases 
 
 class Ambiente:
+    def __init__(self, counter):
+        self.counter = 0
     class lluvia:
         #Constructor
         def __init__(self):
@@ -74,11 +77,12 @@ class Ambiente:
             self.y += self.yspeed
             self.yspeed += 10
 
-            if self.y > 500:
+            if self.y > 768:
                 self.y = ra.randint(-200, -20)
                 self.yspeed = ra.uniform(5, 1)
 
             pygame.draw.line(screen, (0, 191, 255), (self.x, self.y), (self.x, self.y+self.tamaño), 2)
+
     
     class Tormenta_Arena:
         pass
@@ -92,29 +96,40 @@ ciclos = 0
 
 #Creamos un par de animales
 leon = Leon(100, 30, "Carnivoro", "sada")
-leon2 = Leon(100, 40, "Carnivoro", "sada")
+leona = Leona(100, 40, "Carnivoro", "sada")
 cebra = Cebra(100, 20, "Herviboro", "sada")
+cebra2 = Cebra(100, 20, "Herviboro", "sada")
 cerdo = Cerdo(100, 25, "Omnivoro", "Mamifero")
 jirafa = Jirafa(100, 10, "Herviboro", "Mamifero")
 elefante = Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797")
-leopardo = Leopardo(100, 40, "Carnivoro", "sada", "s")
-suricata = Suricata(100, 40, "Carnivoro", "sada", "s")
-jabali = Jabali(100, 40, "Carnivoro", "sada", "s")
+leopardo = Leopardo(100, 40, "Carnivoro", "sada")
+suricata = Suricata(100, 40, "Insectivoro", "sada", "s")
+jabali = Jabali(100, 40, "Omnivoro", "sada", "s")
 plantita = Planta1(5, 3, 100, 12)
 plantita2 = Planta2(12, 7, 100, 12)
 plantita3 = Planta3(16, 2, 100, 32)
 plantita4 = Planta3(11, 4, 100, 14)
 plantita5 = Planta3(9, 8, 100, 14)
-
+plantita6 = Planta3(11, 9, 100, 14)
+plantita7 = Planta1(8, 1, 100, 12)
+plantita8 = Planta2(14, 7, 100, 12)
+plantita9 = Planta1(6, 9, 100, 12)
+plantita10 = Planta2(16, 1, 100, 12)
 
 #Creacion animales
 all_sprites = pygame.sprite.Group()
-all_sprites.add(leon, leon2, cebra, cerdo, jirafa, elefante, leopardo, suricata, jabali, plantita, plantita2, plantita3, plantita4, plantita5)
-lista = [leon, leon2, cebra, cerdo, jirafa, elefante, leopardo, suricata, jabali]
+lista = [leon, leona, cebra, cerdo, jirafa, elefante, leopardo, suricata, jabali, cebra2]
+listaplantas = [plantita, plantita2, plantita3, plantita4, plantita5, plantita6, plantita7, plantita8, plantita9, plantita10]
+all_sprites.add(lista, listaplantas)
+
 
 #Banderas de Eventos Climaticos
 llover = False
 
+
+
+#Hora
+hora = 0
 #Bucle del Programa
 while True:
     for event in pygame.event.get():
@@ -140,13 +155,15 @@ while True:
 
 
    
-
     ciclos += 1
+    if ciclos >= 1000:
+        hora += 1
+        ciclos = 0
 
     
-    if ciclos > 12352 and not llover:
+    if hora > 100 and not llover:
         llover = True    
-    if ciclos > 53723:
+    if hora > 200:
         llover = False
         
     if llover:
@@ -161,13 +178,13 @@ while True:
             if isinstance(colision, Animal) and isinstance(sprite, Animal):
                 if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
                     sprite.kill()
+    
                     
-
-
+   
 
     all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()
 
 
-    #rANGO DE (1,4) para que cuando este en 1, la presa escape
+    #rANGO DE (1,4) para que cuando este en 1, la presa escape Idea de franco
