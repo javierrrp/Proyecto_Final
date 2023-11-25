@@ -86,6 +86,11 @@ class Panel:
         screen.blit(self.texto, (1080, 400))
         if self.lluvia.collidepoint(pygame.mouse.get_pos()):
             pygame.draw.rect(screen, (70, 189, 34), self.lluvia, 0)
+    
+    def textos(self):
+        myFont = pygame.font.SysFont("Calibri", 30)
+        t_hora = myFont.render(f"Ciclos: {hora}", True, (220, 220, 220))
+        screen.blit(t_hora, (self.ubicacionx + 20, self.ubicaciony + 20))
 
 
 
@@ -192,7 +197,7 @@ while True:
 
    #Ciclos
     ciclos += 1
-    if ciclos >= 1000:
+    if ciclos >= 100:
         hora += 1
         ciclos = 0
 
@@ -222,6 +227,7 @@ while True:
 
     dibujado.pintar()
     dibujado.botones()
+    dibujado.textos()
     all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()

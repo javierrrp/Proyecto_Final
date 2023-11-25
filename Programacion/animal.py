@@ -28,7 +28,7 @@ class Leon(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 1  # Velocidad muy baja para movimiento lento
+        self.speed = 2  # Velocidad muy baja para movimiento lento
         self.subpix = 6
         self.subx = self.rect.x * self.subpix + 3  # Ajuste para centrar en la casilla
         self.suby = self.rect.y * self.subpix + 3  # Ajuste para centrar en la casilla
@@ -72,7 +72,7 @@ class Leona(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 1  # Velocidad muy baja para movimiento lento
+        self.speed = 2  # Velocidad muy baja para movimiento lento
         self.subpix = 6
         self.subx = self.rect.x * self.subpix + 3  # Ajuste para centrar en la casilla
         self.suby = self.rect.y * self.subpix + 3  # Ajuste para centrar en la casilla
@@ -117,7 +117,7 @@ class Cebra(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 1
+        self.speed = 2
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
@@ -281,7 +281,7 @@ class Jabali(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 1
+        self.speed = 2
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
@@ -323,7 +323,7 @@ class Leopardo(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 1
+        self.speed = 2
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
@@ -365,7 +365,7 @@ class Suricata(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 1
+        self.speed = 2
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
