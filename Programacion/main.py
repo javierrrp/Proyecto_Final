@@ -11,13 +11,22 @@ from planta import *
 pygame.init()
 
 #crear ventana de Simulador
-screen = pygame.display.set_mode((1024,768))
+screen = pygame.display.set_mode((1268,768))
 
 
 #Icono y titulo
 pygame.display.set_caption('Proyecto Final (Simulador Sabana)')
 icono = pygame.image.load('Logo.ico')
 pygame.display.set_icon(icono)
+
+
+
+
+
+#Panel de control
+
+
+
 
 
 
@@ -56,6 +65,20 @@ matriz = [
 
 
 #Clases 
+
+
+class Panel:
+    def __init__(self):
+        self.ubicacionx = 768 + 200
+        self.ubicaciony = 0
+        self.ancho = 300
+        self.a = 1268
+    
+    def pintar(self):
+        a = pygame.Rect(self.ubicacionx, self.ubicaciony, self.ancho, self.a)
+        screen.fill((100, 100, 100), a)
+
+
 
 class Ambiente:
     def __init__(self, counter):
@@ -123,6 +146,11 @@ listaplantas = [plantita, plantita2, plantita3, plantita4, plantita5, plantita6,
 all_sprites.add(lista, listaplantas)
 
 
+
+dibujado = Panel()
+
+
+
 #Banderas de Eventos Climaticos
 llover = False
 
@@ -154,11 +182,14 @@ while True:
     
 
 
-   
+   #Ciclos
     ciclos += 1
     if ciclos >= 1000:
         hora += 1
         ciclos = 0
+        leon.vida -= 50
+        if leon.vida == 0:
+            leon.kill()
 
     
     if hora > 100 and not llover:
@@ -171,17 +202,19 @@ while True:
             gota.mostrar(screen)
 
     
-
     for sprite in lista:
         colisiones = pygame.sprite.spritecollide(sprite, lista, False)
         for colision in colisiones:
             if isinstance(colision, Animal) and isinstance(sprite, Animal):
                 if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
                     sprite.kill()
+            
+    
     
                     
-   
+    
 
+    dibujado.pintar()
     all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()

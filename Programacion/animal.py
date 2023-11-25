@@ -23,6 +23,7 @@ class Animal(Organismo):
 class Leon(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
+        self.vida = 100
         self.image = pygame.image.load("Animales/leon.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0, 25) * 40  # Posición X en una celda de 40x40
@@ -64,6 +65,7 @@ class Leon(Animal):
 class Leona(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
+        self.vida = 100
         self.image = pygame.image.load("Animales/leona.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0, 25) * 40  # Posición X en una celda de 40x40
@@ -108,6 +110,7 @@ class Leona(Animal):
 class Cebra(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
+        self.vida = 100
         self.image = pygame.image.load("Animales/cebra.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,1024)
@@ -147,6 +150,7 @@ class Cebra(Animal):
 class Cerdo(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
+        self.vida = 100
         self.image = pygame.image.load("Animales/cerdo.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,1024)
@@ -187,6 +191,7 @@ class Cerdo(Animal):
 class Jirafa(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
+        self.vida = 100
         self.image = pygame.image.load("Animales/jirafa.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,1024)
@@ -227,6 +232,7 @@ class Jirafa(Animal):
 class Elefante(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
+        self.vida = 100
         self.image = pygame.image.load("Animales/elefante.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,1024)
@@ -268,6 +274,7 @@ class Elefante(Animal):
 class Jabali(Animal):
     def __init__(self, vida, energia, velocidad, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
+        self.vida = 100
         self.image = pygame.image.load("Animales/jabali.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,1024)
@@ -309,6 +316,7 @@ class Jabali(Animal):
 class Leopardo(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
+        self.vida = 100
         self.image = pygame.image.load("Animales/leopardo.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,1024)
@@ -350,6 +358,7 @@ class Leopardo(Animal):
 class Suricata(Animal):
     def __init__(self, vida, energia, velocidad, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
+        self.vida = 100
         self.image = pygame.image.load("Animales/suricata.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,1024)
