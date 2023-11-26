@@ -8,8 +8,8 @@ from organismo import Organismo
 
 
 class Animal(Organismo):
-    def __init__(self, vida, energia, dieta, especies):
-        super().__init__(0, 0, vida, energia)  # Ejemplo de posición inicial en (0, 0)
+    def __init__(self, dieta, especies, vida, energia, posicionx=0, posiciony=0):
+        super().__init__(posicionx, posiciony, vida, energia)
         self.dieta = dieta
         self.especies = especies
 
@@ -23,7 +23,6 @@ class Animal(Organismo):
 class Leon(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
         self.image = pygame.image.load("Animales/leon.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
@@ -39,7 +38,7 @@ class Leon(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
+            direction = ra.randint(1, 5)
             if direction == 1:
                 self.direction = "up"  # Actualiza la dirección en self.direction
             elif direction == 2:
@@ -48,6 +47,8 @@ class Leon(Animal):
                 self.direction = "left"
             elif direction == 4:
                 self.direction = "right"
+            elif direction == 5:
+                self.direction = "stop"
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
@@ -57,8 +58,10 @@ class Leon(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        elif self.direction == "stop" and self.rect.x < 974 - self.rect.width:
+            self.subx += 0
         else: 
-            self.direction = ra.choice(["up", "down", "left", "right"])
+            self.direction = ra.choice(["up", "down", "left", "right", "stop"])
 
 
         self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
@@ -67,7 +70,6 @@ class Leon(Animal):
 class Leona(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
         self.image = pygame.image.load("Animales/leona.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
@@ -83,7 +85,7 @@ class Leona(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
+            direction = ra.randint(1, 5)
             if direction == 1:
                 self.direction = "up"  # Actualiza la dirección en self.direction
             elif direction == 2:
@@ -92,6 +94,8 @@ class Leona(Animal):
                 self.direction = "left"
             elif direction == 4:
                 self.direction = "right"
+            elif direction == 5:
+                self.direction = "stop"
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
@@ -101,6 +105,10 @@ class Leona(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        elif self.direction == "stop" and self.rect.x < 974 - self.rect.width:
+            self.subx += 0
+        else: 
+            self.direction = ra.choice(["up", "down", "left", "right", "stop"])
 
 
         self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
@@ -108,11 +116,9 @@ class Leona(Animal):
 
 
 
-
 class Cebra(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
         self.image = pygame.image.load("Animales/cebra.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
@@ -128,15 +134,17 @@ class Cebra(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
+            direction = ra.randint(1, 5)
             if direction == 1:
-                self.direction = "up"
+                self.direction = "up"  # Actualiza la dirección en self.direction
             elif direction == 2:
                 self.direction = "down"
             elif direction == 3:
                 self.direction = "left"
             elif direction == 4:
                 self.direction = "right"
+            elif direction == 5:
+                self.direction = "stop"
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
@@ -146,13 +154,17 @@ class Cebra(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        elif self.direction == "stop" and self.rect.x < 974 - self.rect.width:
+            self.subx += 0
+        else: 
+            self.direction = ra.choice(["up", "down", "left", "right", "stop"])
 
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
+
+        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
+        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casillaz
 class Cerdo(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
         self.image = pygame.image.load("Animales/cerdo.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
@@ -168,15 +180,17 @@ class Cerdo(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
+            direction = ra.randint(1, 5)
             if direction == 1:
-                self.direction = "up"
+                self.direction = "up"  # Actualiza la dirección en self.direction
             elif direction == 2:
                 self.direction = "down"
             elif direction == 3:
                 self.direction = "left"
             elif direction == 4:
                 self.direction = "right"
+            elif direction == 5:
+                self.direction = "stop"
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
@@ -186,14 +200,17 @@ class Cerdo(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        elif self.direction == "stop" and self.rect.x < 974 - self.rect.width:
+            self.subx += 0
+        else: 
+            self.direction = ra.choice(["up", "down", "left", "right", "stop"])
 
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
 
+        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
+        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
 class Jirafa(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
         self.image = pygame.image.load("Animales/jirafa.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
@@ -209,15 +226,17 @@ class Jirafa(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
+            direction = ra.randint(1, 5)
             if direction == 1:
-                self.direction = "up" 
+                self.direction = "up"  # Actualiza la dirección en self.direction
             elif direction == 2:
                 self.direction = "down"
             elif direction == 3:
                 self.direction = "left"
             elif direction == 4:
                 self.direction = "right"
+            elif direction == 5:
+                self.direction = "stop"
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
@@ -227,14 +246,17 @@ class Jirafa(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        elif self.direction == "stop" and self.rect.x < 974 - self.rect.width:
+            self.subx += 0
+        else: 
+            self.direction = ra.choice(["up", "down", "left", "right", "stop"])
 
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
 
+        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
+        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
 class Elefante(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
         self.image = pygame.image.load("Animales/elefante.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
@@ -250,15 +272,17 @@ class Elefante(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
+            direction = ra.randint(1, 5)
             if direction == 1:
-                self.direction = "up" 
+                self.direction = "up"  # Actualiza la dirección en self.direction
             elif direction == 2:
                 self.direction = "down"
             elif direction == 3:
                 self.direction = "left"
             elif direction == 4:
                 self.direction = "right"
+            elif direction == 5:
+                self.direction = "stop"
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
@@ -268,15 +292,18 @@ class Elefante(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        elif self.direction == "stop" and self.rect.x < 974 - self.rect.width:
+            self.subx += 0
+        else: 
+            self.direction = ra.choice(["up", "down", "left", "right", "stop"])
 
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
-    
+
+        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
+        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
 
 class Jabali(Animal):
     def __init__(self, vida, energia, velocidad, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
         self.image = pygame.image.load("Animales/jabali.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
@@ -292,15 +319,17 @@ class Jabali(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
+            direction = ra.randint(1, 5)
             if direction == 1:
-                self.direction = "up" 
+                self.direction = "up"  # Actualiza la dirección en self.direction
             elif direction == 2:
                 self.direction = "down"
             elif direction == 3:
                 self.direction = "left"
             elif direction == 4:
                 self.direction = "right"
+            elif direction == 5:
+                self.direction = "stop"
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
@@ -310,15 +339,19 @@ class Jabali(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        elif self.direction == "stop" and self.rect.x < 974 - self.rect.width:
+            self.subx += 0
+        else: 
+            self.direction = ra.choice(["up", "down", "left", "right", "stop"])
 
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
+
+        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
+        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
 
 
 class Leopardo(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
         self.image = pygame.image.load("Animales/leopardo.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
@@ -334,15 +367,17 @@ class Leopardo(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
+            direction = ra.randint(1, 5)
             if direction == 1:
-                self.direction = "up" 
+                self.direction = "up"  # Actualiza la dirección en self.direction
             elif direction == 2:
                 self.direction = "down"
             elif direction == 3:
                 self.direction = "left"
             elif direction == 4:
                 self.direction = "right"
+            elif direction == 5:
+                self.direction = "stop"
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
@@ -352,15 +387,19 @@ class Leopardo(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        elif self.direction == "stop" and self.rect.x < 974 - self.rect.width:
+            self.subx += 0
+        else: 
+            self.direction = ra.choice(["up", "down", "left", "right", "stop"])
 
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
+
+        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
+        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
 
 
 class Suricata(Animal):
     def __init__(self, vida, energia, velocidad, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
         self.image = pygame.image.load("Animales/suricata.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
@@ -376,15 +415,17 @@ class Suricata(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
+            direction = ra.randint(1, 5)
             if direction == 1:
-                self.direction = "up" 
+                self.direction = "up"  # Actualiza la dirección en self.direction
             elif direction == 2:
                 self.direction = "down"
             elif direction == 3:
                 self.direction = "left"
             elif direction == 4:
                 self.direction = "right"
+            elif direction == 5:
+                self.direction = "stop"
 
         if self.direction == "up" and self.rect.y > 0:
             self.suby -= self.speed
@@ -394,6 +435,11 @@ class Suricata(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+        elif self.direction == "stop" and self.rect.x < 974 - self.rect.width:
+            self.subx += 0
+        else: 
+            self.direction = ra.choice(["up", "down", "left", "right", "stop"])
 
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
+
+        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
+        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla

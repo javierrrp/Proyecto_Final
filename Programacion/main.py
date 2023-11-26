@@ -142,6 +142,9 @@ elefante = Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797")
 leopardo = Leopardo(100, 40, "Carnivoro", "sada")
 suricata = Suricata(100, 40, "Insectivoro", "sada", "s")
 jabali = Jabali(100, 40, "Omnivoro", "sada", "s")
+
+
+#Crear Plantas
 plantita = Planta1(5, 3, 100, 12)
 plantita2 = Planta2(12, 7, 100, 12)
 plantita3 = Planta3(16, 2, 100, 32)
@@ -168,7 +171,7 @@ dibujado = Panel()
 llover = False
 
 
-
+ani = Animal(100, 50, 0, 0)
 #Hora
 hora = 0
 #Bucle del Programa
@@ -197,10 +200,11 @@ while True:
 
    #Ciclos
     ciclos += 1
-    if ciclos >= 100:
+    if ciclos >= 500:
         hora += 1
+        ani.vida -= 50
         ciclos = 0
-
+    
     
     if hora > 100 and not llover:
         llover = True    
@@ -218,12 +222,19 @@ while True:
             if isinstance(colision, Animal) and isinstance(sprite, Animal):
                 if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
                     sprite.kill()
+
+        if ani.vida < 0:
+            lista.remove(sprite)
+            all_sprites.remove(sprite)
+   
+
             
-    if event.type == MOUSEBUTTONDOWN and event.button == 1:
-        if llover:
-            llover = False
-        else:
-            llover = True
+    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if dibujado.lluvia.collidepoint(pygame.mouse.get_pos()):
+                if llover:
+                    llover = False
+                else:
+                    llover = True
 
     dibujado.pintar()
     dibujado.botones()
