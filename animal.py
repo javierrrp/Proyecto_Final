@@ -5,16 +5,13 @@ import time
 from organismo import Organismo
 
 
-
-
 class Animal(Organismo):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(0, 0, vida, energia)  # Ejemplo de posición inicial en (0, 0)
         self.dieta = dieta
         self.especies = especies
 
-    def cazar(self):
-        
+    def cazar(self):  
         pass
         
     def descomposicion(self):
@@ -53,13 +50,15 @@ class Leon(Animal):
             self.suby -= self.speed
         elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
             self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 768 + 300:
+        elif self.direction == "left" and self.rect.x > 0:
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 960 - self.rect.width:
             self.subx += self.speed
         else: 
             self.direction = ra.choice(["up", "down", "left", "right"])
 
+        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
+        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
 
         self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
         self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
@@ -101,6 +100,9 @@ class Leona(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 960 - self.rect.width:
             self.subx += self.speed
+
+        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
+        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
 
 
         self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
@@ -147,6 +149,9 @@ class Cebra(Animal):
         elif self.direction == "right" and self.rect.x < 960 - self.rect.width:
             self.subx += self.speed
 
+        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
+        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))    
+
         self.rect.x = round(self.subx / self.subpix)
         self.rect.y = round(self.suby / self.subpix)
 class Cerdo(Animal):
@@ -187,6 +192,9 @@ class Cerdo(Animal):
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
+        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
+        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
+        
         self.rect.x = round(self.subx / self.subpix)
         self.rect.y = round(self.suby / self.subpix)
 
@@ -227,6 +235,9 @@ class Jirafa(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+
+        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
+        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
 
         self.rect.x = round(self.subx / self.subpix)
         self.rect.y = round(self.suby / self.subpix)
@@ -269,9 +280,12 @@ class Elefante(Animal):
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
 
+        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
+        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
+
         self.rect.x = round(self.subx / self.subpix)
         self.rect.y = round(self.suby / self.subpix)
-    
+        
 
 class Jabali(Animal):
     def __init__(self, vida, energia, velocidad, dieta, especies):
@@ -310,6 +324,9 @@ class Jabali(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+
+        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
+        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
 
         self.rect.x = round(self.subx / self.subpix)
         self.rect.y = round(self.suby / self.subpix)
@@ -394,6 +411,9 @@ class Suricata(Animal):
             self.subx -= self.speed
         elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
             self.subx += self.speed
+
+        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
+        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
 
         self.rect.x = round(self.subx / self.subpix)
         self.rect.y = round(self.suby / self.subpix)
