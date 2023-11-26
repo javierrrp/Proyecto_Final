@@ -6,7 +6,7 @@ import time
 
 
 class Organismo(Sprite):
-    def __init__(self, posicionx=0, posiciony=0, vida=100, energia=50):
+    def __init__(self,  vida, energia, posicionx=0, posiciony=0):
         super().__init__()
         self.posicionx = posicionx
         self.posiciony = posiciony

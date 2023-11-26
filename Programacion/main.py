@@ -7,11 +7,13 @@ from organismo import *
 from animal import *
 from planta import *
 
-#Inicializar Pygame
+# Inicializar Pygame
 pygame.init()
 
-#crear ventana de Simulador
-screen = pygame.display.set_mode((1268,768))
+# Crear ventana de Simulador
+nRes = [1268, 768, 960]
+screen = pygame.display.set_mode((nRes[0],nRes[1]))
+
 
 
 #Icono y titulo
@@ -22,68 +24,54 @@ pygame.display.set_icon(icono)
 
 
 
-
-#Panel de control
-
-
-
-celda = 40
+# Imagen de fondo
 fondo = pygame.image.load('map.png')
 fondo_rect = fondo.get_rect()
 
-
-#ciclos
+# Ciclos
 lluvia = False
-
-#colores de las celkdad
-#26X20
-matriz = [
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (170, 253, 152), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152),(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (0, 149, 29), (238, 249, 118), (238, 249, 118), (238, 249, 118), (0, 149, 29), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (191, 191, 191), (191, 191, 191), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(0, 149, 29), (191, 191, 191), (238, 249, 118), (238, 249, 118), (191, 191, 191), (191, 191, 191), (191, 191, 191), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (170, 253, 152), (238, 249, 118), (170, 253, 152), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (255, 255, 255 ), (255, 255, 255), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (255, 255, 255 ), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (191, 191, 191), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (255, 255, 255 ), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (255, 255, 255 ), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (255, 255, 255 ), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-    [(238, 249, 118), (238, 249, 118), (238, 249, 118), (255, 255, 255 ), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
-     [(238, 249, 118), (238, 249, 118), (238, 249, 118), (255, 255, 255 ), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (191, 191, 191), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],]
-
-
+Tormenta = False
 
 #Clases 
-
-
 class Panel:
     def __init__(self):
-        self.ubicacionx = 768 + 200
+        self.ubicacionx = 800 + 200
         self.ubicaciony = 0
-        self.ancho = 300
-        self.a = 1268
+        self.ancho = 320
+        self.a = 768
+        self.tormenta_button = pygame.Rect(1060, 500, 150, 50)  # Botón de tormenta
+        self.lluvia_button = pygame.Rect(1060, 400, 150, 50)  # Botón de tormenta
+        self.myFont = pygame.font.SysFont("Calibri", 30)
     
+
+    
+
     def pintar(self):
         a = pygame.Rect(self.ubicacionx, self.ubicaciony, self.ancho, self.a)
-        screen.fill((100, 100, 100), a)
+        screen.fill((52,52,52), a)
+
     def botones(self):
         # lluvia
-        self.lluvia = Rect(1040, 400, 150, 50)
-        self.myFont = pygame.font.SysFont("Calibri", 30)
-        self.texto = self.myFont.render("Lluvia", True, (220,220,220))
-        pygame.draw.rect(screen, (70, 189, 34), self.lluvia, 0)
-        screen.blit(self.texto, (1080, 400))
-        if self.lluvia.collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(screen, (70, 189, 34), self.lluvia, 0)
-    
+        texto_lluvia = self.myFont.render("Lluvia", True, (220, 220, 220))
+        pygame.draw.rect(screen, (70, 189, 34), self.lluvia_button, 0)
+        screen.blit(texto_lluvia, (1100, 410))
+        if self.lluvia_button.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(screen, (100, 220, 100), self.lluvia_button, 0)
+
+        # tormenta
+        texto_tormenta = self.myFont.render("Tormenta", True, (220, 220, 220))
+        pygame.draw.rect(screen, (255, 0, 0), self.tormenta_button, 0)
+        screen.blit(texto_tormenta, (1080, 510))
+        if self.tormenta_button.collidepoint(pygame.mouse.get_pos()):
+            pygame.draw.rect(screen, (255, 100, 100), self.tormenta_button, 0)
+
+    def check_button_click(self, event):
+        if event.type == MOUSEBUTTONDOWN and event.button == 1:
+            if self.tormenta_button.collidepoint(pygame.mouse.get_pos()):
+                return "tormenta"
+            elif self.lluvia_button.collidepoint(pygame.mouse.get_pos()):
+                return "lluvia"
+        return False
     def textos(self):
         myFont = pygame.font.SysFont("Calibri", 30)
         t_hora = myFont.render(f"Ciclos: {hora}", True, (220, 220, 220))
@@ -100,7 +88,7 @@ class Ambiente:
             #posicionx 
             self.x = ra.randint(0, 1024)
             #posiciony
-            self.y = ra.randint(-200, -20)
+            self.y = ra.randint(0, 960)
             #Velocidad al caer en eje y
             self.yspeed = ra.uniform(0.2, 5)
             self.tamaño = ra.randint(10, 20)
@@ -109,128 +97,152 @@ class Ambiente:
         def mostrar(self):
 
             self.y += self.yspeed
-            self.yspeed += 10
+            self.yspeed += 90
 
             if self.y > 768:
                 self.y = ra.randint(-200, -20)
                 self.yspeed = ra.uniform(5, 1)
+            pygame.draw.line(screen, (25, 41, 237), (self.x, self.y), (self.x, self.y+self.tamaño), 2)
 
-            pygame.draw.line(screen, (0, 191, 255), (self.x, self.y), (self.x, self.y+self.tamaño), 2)
+    class Tormenta(Sprite):
+        def __init__(self):
+            super().__init__()
+            self.nube = ra.randrange(3)
+            if self.nube == 1:
+                self.image = pygame.transform.scale(pygame.image.load("Ambiente/nube.png").convert(), (50, 50))
+                self.rect = self.image.get_rect()
+                self.radius = 25
+            elif self.nube == 0:
+                self.image = pygame.transform.scale(pygame.image.load("Ambiente/nube.png").convert(), (75, 75))
+                self.rect = self.image.get_rect()
+                self.radius = 37
+            elif self.nube == 2:
+                self.image = pygame.transform.scale(pygame.image.load("Ambiente/nube.png").convert(), (100, 100))
+                self.rect = self.image.get_rect()
+                self.radius = 50
+            self.image.set_colorkey((0,0,0))
 
-    
-    class Tormenta_Arena:
-        pass
-    
+            self.rect.x = ra.randrange(-1000, 0)
+            self.rect.y = ra.randrange(-30, 100)
+            self.velocidad_x = ra.randrange(1 , 2) # Velocidad horizontal aleatoria
+
+        def update(self):
+            self.rect.x += self.velocidad_x
+            if self.rect.right > nRes[2] + 100:
+                self.rect.x = ra.randrange(-1000, 0)
+                self.rect.y = ra.randrange(-30, 100)
+                self.velocidad_x = ra.randrange(1 , 2) # Cambiar horizontal aleatoria
 
 
 
-
-gotas = [Ambiente.lluvia() for _ in range(250)]
+gotas = [Ambiente.lluvia() for _ in range(400)]
 ciclos = 0
 
-#Creamos un par de animales
-leon = Leon("Carnivoro", "sada", 100, 30)
-leona = Leona("Carnivoro", "sada", 100, 30)
-cebra = Cebra("Herviboro", "sada", 100, 30)
-cebra2 = Cebra("Herviboro", "sada", 100, 30)
-cerdo = Cerdo("Omnivoro", "sada", 100, 30)
-jirafa = Jirafa("Herviboro", "sada", 100, 30)
-elefante = Elefante("Herviboro", "sada", 100, 30)
-leopardo = Leopardo("Carnivoro", "sada", 100, 30)
-suricata = Suricata("Insectivoro", "sada", 100, 30)
-jabali = Jabali("Omnivoro", "sada", 100, 30)
+
+Lion = Leon(30, "Carnivoro", "sada")
+#Crea animales
+lista =[]
+for i in range(0,2):
+    lista.append(Leon(30, "Carnivoro", "sada"))
+    lista.append(Leona(40, "Carnivoro", "sada"))
+    lista.append(Cebra(20, "Herviboro", "sada"))
+    lista.append(Cebra(20, "Herviboro", "sada"))
+    lista.append(Cerdo(25, "Omnivoro", "Mamifero"))
+    lista.append(Jirafa(10, "Herviboro", "Mamifero"))
+    lista.append(Elefante(40, "Herviboro", "L. africana Blumenbach, 1797"))
+    lista.append(Leopardo(40, "Carnivoro", "sada"))
+    lista.append(Leopardo(40, "Carnivoro", "sada"))
+    lista.append(Suricata(40, "Insectivoro", "sada"))
+    lista.append(Jabali(40, "Omnivoro", "sada"))
 
 
-#Crear Plantas
-plantita = Planta1(5, 3, 100, 12)
-plantita2 = Planta2(12, 7, 100, 12)
-plantita3 = Planta3(16, 2, 100, 32)
-plantita4 = Planta3(11, 4, 100, 14)
-plantita5 = Planta3(9, 8, 100, 14)
-plantita6 = Planta3(11, 9, 100, 14)
-plantita7 = Planta1(8, 1, 100, 12)
-plantita8 = Planta2(14, 7, 100, 12)
-plantita9 = Planta1(6, 9, 100, 12)
-plantita10 = Planta2(16, 1, 100, 12)
+# Agrega plantas alrededor del mapa
+listaplantas = []
+for i in range(0,10):
+    listaplantas.append(Planta1(ra.randint(0, 950), ra.randint(0, 768), 100, 12))
+    listaplantas.append(Planta2(ra.randint(0, 950), ra.randint(0, 768), 100, 12))
 
-#Creacion animales
+# Creacion animales
 all_sprites = pygame.sprite.Group()
-lista = [leon, leona, cebra, cerdo, jirafa, elefante, leopardo, suricata, jabali, cebra2]
-listaplantas = [plantita, plantita2, plantita3, plantita4, plantita5, plantita6, plantita7, plantita8, plantita9, plantita10]
 all_sprites.add(lista, listaplantas)
-
 
 
 dibujado = Panel()
 
+# Sprites
+nubes = pygame.sprite.Group()
 
-#Banderas de Eventos Climaticos
+# Blucle de las nubes
+
+for i in range(500):
+    nube = Ambiente.Tormenta()
+    nubes.add(nube)
+
+# Banderas de Eventos Climaticos
 llover = False
+tormenta = False
 
 
-ani = Animal(100, 50, 0, 0)
-#Hora
+# Hora
 hora = 0
-#Bucle del Programa
+# Bucle del Programa
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
+        # Controlar eventos de los botones
+        if event.type == MOUSEBUTTONDOWN and event.button == 1:
+            boton_clickeado = dibujado.check_button_click(event)
+            if boton_clickeado == "tormenta":
+                tormenta = not tormenta
+            elif boton_clickeado == "lluvia":
+                llover = not llover
+
+    # Dibujar la matriz
     screen.blit(fondo, fondo_rect)
-    
 
-    #Dibujar Lineas en la matriz 
-    #Color, inicio y fin, resolucion, Grosor de linea
-    for i in range(1, len(matriz)):
-        pygame.draw.line(screen, (0, 0, 0), (0, i * celda), (1024, i * celda), 1)
-    for j in range(1, len(matriz[0])):
-        pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 768), 1)
-    
-    
-
-   #Ciclos
+    # Ciclos
     ciclos += 1
     if ciclos >= 100:
         hora += 1
-        ani.vida -= 50
         ciclos = 0
-    
-    
-    if hora > 100 and not llover:
-        llover = True    
-    if hora > 200:
+        for animal in lista:  # Itera sobre la lista de animales
+            animal.vida -= 0.50  # Reduce la vida de cada animal
+            if animal.vida <= 0:
+                all_sprites.remove(animal)  # Elimina el sprite del animal si su vida llega a cero o menos
+                lista.remove(animal)  
+
+            if animal.vida >= 0:
+                all:sprite.remove(sprite)
+
+    # Verificar eventos climáticos
+    if hora > 10 and not llover and not tormenta:
+        llover = True
+        tormenta = False
+        nubes.empty()  # Vaciar el grupo de nubes para que no se muestren durante la lluvia
+    if hora > 20:
         llover = False
-        
+        tormenta = True
+
+    # Mostrar lluvia o tormenta
     if llover:
         for gota in gotas:
             gota.mostrar()
 
-    
+    if tormenta:
+        nubes.update()
+        nubes.draw(screen)
+
     for sprite in lista:
         colisiones = pygame.sprite.spritecollide(sprite, lista, False)
         for colision in colisiones:
             if isinstance(colision, Animal) and isinstance(sprite, Animal):
-                if colision.dieta == "Carnivoro" and sprite.dieta != "Carnivoro":
-                    colision.cazar(sprite)  # El animal carnívoro caza a la presa
-                    if sprite in lista:
-                        lista.remove(sprite)  # Eliminar la presa de la lista
-                        all_sprites.remove(sprite)
+                if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
+                    sprite.kill()
 
-        if sprite.vida <= 0:  # Verificar si el sprite actual cumple la condición de vida baja
-            if sprite in lista:  # Verificar si el sprite está en la lista antes de eliminarlo
-                lista.remove(sprite)
-                all_sprites.remove(sprite)
-
-    
-    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if dibujado.lluvia.collidepoint(pygame.mouse.get_pos()):
-                if llover:
-                    llover = False
-                else:
-                    llover = True
-
+    print(Lion.vida)
     dibujado.pintar()
     dibujado.botones()
     dibujado.textos()
@@ -238,4 +250,3 @@ while True:
     all_sprites.draw(screen)
     pygame.display.flip()
 
-    #rANGO DE (1,4) para que cuando este en 1, la presa escape Idea de franco
