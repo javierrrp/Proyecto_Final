@@ -27,19 +27,16 @@ pygame.display.set_icon(icono)
 
 
 
-
-
-
-
-#Matriz 26x20
-#tamaño de la celda
 celda = 40
+fondo = pygame.image.load('map.png')
+fondo_rect = fondo.get_rect()
 
 
 #ciclos
 lluvia = False
 
 #colores de las celkdad
+#26X20
 matriz = [
     [(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
     [(238, 249, 118), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (0, 149, 29), (238, 249, 118), (170, 253, 152), (238, 249, 118), (238, 249, 118), (170, 253, 152), (170, 253, 152), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (170, 253, 152),(238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118), (238, 249, 118)],
@@ -95,8 +92,8 @@ class Panel:
 
 
 class Ambiente:
-    def __init__(self, counter):
-        self.counter = 0
+    def __init__(self):
+        pass
     class lluvia:
         #Constructor
         def __init__(self):
@@ -132,16 +129,16 @@ gotas = [Ambiente.lluvia() for _ in range(250)]
 ciclos = 0
 
 #Creamos un par de animales
-leon = Leon(100, 30, "Carnivoro", "sada")
-leona = Leona(100, 40, "Carnivoro", "sada")
-cebra = Cebra(100, 20, "Herviboro", "sada")
-cebra2 = Cebra(100, 20, "Herviboro", "sada")
-cerdo = Cerdo(100, 25, "Omnivoro", "Mamifero")
-jirafa = Jirafa(100, 10, "Herviboro", "Mamifero")
-elefante = Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797")
-leopardo = Leopardo(100, 40, "Carnivoro", "sada")
-suricata = Suricata(100, 40, "Insectivoro", "sada", "s")
-jabali = Jabali(100, 40, "Omnivoro", "sada", "s")
+leon = Leon("Carnivoro", "sada", 100, 30)
+leona = Leona("Carnivoro", "sada", 100, 30)
+cebra = Cebra("Herviboro", "sada", 100, 30)
+cebra2 = Cebra("Herviboro", "sada", 100, 30)
+cerdo = Cerdo("Omnivoro", "sada", 100, 30)
+jirafa = Jirafa("Herviboro", "sada", 100, 30)
+elefante = Elefante("Herviboro", "sada", 100, 30)
+leopardo = Leopardo("Carnivoro", "sada", 100, 30)
+suricata = Suricata("Insectivoro", "sada", 100, 30)
+jabali = Jabali("Omnivoro", "sada", 100, 30)
 
 
 #Crear Plantas
@@ -181,26 +178,21 @@ while True:
             pygame.quit()
             sys.exit()
 
-
- 
-    #Dibujar la matriz
-    for i in range(len(matriz)):
-        for j in range(len(matriz[i])):
-            pygame.draw.rect(screen, matriz[i][j], (j * celda, i * celda, celda, celda))
+    screen.blit(fondo, fondo_rect)
     
 
     #Dibujar Lineas en la matriz 
     #Color, inicio y fin, resolucion, Grosor de linea
     for i in range(1, len(matriz)):
-        pygame.draw.line(screen, (0, 0, 0), (0, i * celda), (1024, i * celda), 2)
+        pygame.draw.line(screen, (0, 0, 0), (0, i * celda), (1024, i * celda), 1)
     for j in range(1, len(matriz[0])):
-        pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 768), 2)
+        pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 768), 1)
     
-
+    
 
    #Ciclos
     ciclos += 1
-    if ciclos >= 500:
+    if ciclos >= 100:
         hora += 1
         ani.vida -= 50
         ciclos = 0
@@ -220,15 +212,18 @@ while True:
         colisiones = pygame.sprite.spritecollide(sprite, lista, False)
         for colision in colisiones:
             if isinstance(colision, Animal) and isinstance(sprite, Animal):
-                if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
-                    sprite.kill()
+                if colision.dieta == "Carnivoro" and sprite.dieta != "Carnivoro":
+                    colision.cazar(sprite)  # El animal carnívoro caza a la presa
+                    if sprite in lista:
+                        lista.remove(sprite)  # Eliminar la presa de la lista
+                        all_sprites.remove(sprite)
 
-        if ani.vida < 0:
-            lista.remove(sprite)
-            all_sprites.remove(sprite)
-   
+        if sprite.vida <= 0:  # Verificar si el sprite actual cumple la condición de vida baja
+            if sprite in lista:  # Verificar si el sprite está en la lista antes de eliminarlo
+                lista.remove(sprite)
+                all_sprites.remove(sprite)
 
-            
+    
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if dibujado.lluvia.collidepoint(pygame.mouse.get_pos()):
                 if llover:
@@ -242,6 +237,5 @@ while True:
     all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()
-
 
     #rANGO DE (1,4) para que cuando este en 1, la presa escape Idea de franco

@@ -13,9 +13,12 @@ class Animal(Organismo):
         self.dieta = dieta
         self.especies = especies
 
-    def cazar(self):
+    def cazar(self, presa):
+        if self.dieta == "Carnivoro":
+            self.vida += 5
+            if self.vida > 100:  # Asumiendo que 100 es el máximo de vida
+                self.vida = 100
         
-        pass
         
     def descomposicion(self):
         pass
@@ -27,12 +30,13 @@ class Leon(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 2  # Velocidad muy baja para movimiento lento
+        self.speed = 4  # Velocidad muy baja para movimiento lento
         self.subpix = 6
         self.subx = self.rect.x * self.subpix + 3  # Ajuste para centrar en la casilla
         self.suby = self.rect.y * self.subpix + 3  # Ajuste para centrar en la casilla
         self.rango = ra.randint(0, 500)
         self.direction = None  # Dirección inicial
+    
 
     def update(self):
         self.rango -= 1
@@ -74,7 +78,7 @@ class Leona(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 2  # Velocidad muy baja para movimiento lento
+        self.speed = 4  # Velocidad muy baja para movimiento lento
         self.subpix = 6
         self.subx = self.rect.x * self.subpix + 3  # Ajuste para centrar en la casilla
         self.suby = self.rect.y * self.subpix + 3  # Ajuste para centrar en la casilla
@@ -123,7 +127,7 @@ class Cebra(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 2
+        self.speed = 4
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
@@ -169,7 +173,7 @@ class Cerdo(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 1
+        self.speed = 4
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
@@ -215,7 +219,7 @@ class Jirafa(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 1
+        self.speed = 4
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
@@ -261,7 +265,7 @@ class Elefante(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 1
+        self.speed = 4
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
@@ -302,13 +306,13 @@ class Elefante(Animal):
         self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
 
 class Jabali(Animal):
-    def __init__(self, vida, energia, velocidad, dieta, especies):
+    def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
         self.image = pygame.image.load("Animales/jabali.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 2
+        self.speed = 4
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
@@ -356,7 +360,7 @@ class Leopardo(Animal):
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 2
+        self.speed = 4
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
@@ -398,13 +402,13 @@ class Leopardo(Animal):
 
 
 class Suricata(Animal):
-    def __init__(self, vida, energia, velocidad, dieta, especies):
+    def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
         self.image = pygame.image.load("Animales/suricata.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0,974)
         self.rect.y = ra.randint(0,768)
-        self.speed = 2
+        self.speed = 4
         self.subx = self.rect.x * 6  
         self.suby = self.rect.y * 6
         self.subpix = 6
