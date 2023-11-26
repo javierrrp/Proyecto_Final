@@ -139,21 +139,21 @@ gotas = [Ambiente.lluvia() for _ in range(400)]
 ciclos = 0
 
 
-Lion = Leon(30, "Carnivoro", "sada")
+
 #Crea animales
 lista =[]
 for i in range(0,2):
-    lista.append(Leon(30, "Carnivoro", "sada"))
-    lista.append(Leona(40, "Carnivoro", "sada"))
-    lista.append(Cebra(20, "Herviboro", "sada"))
-    lista.append(Cebra(20, "Herviboro", "sada"))
-    lista.append(Cerdo(25, "Omnivoro", "Mamifero"))
-    lista.append(Jirafa(10, "Herviboro", "Mamifero"))
-    lista.append(Elefante(40, "Herviboro", "L. africana Blumenbach, 1797"))
-    lista.append(Leopardo(40, "Carnivoro", "sada"))
-    lista.append(Leopardo(40, "Carnivoro", "sada"))
-    lista.append(Suricata(40, "Insectivoro", "sada"))
-    lista.append(Jabali(40, "Omnivoro", "sada"))
+    lista.append(Leon(100, 30, "Carnivoro", "sada"))
+    lista.append(Leona(100, 40, "Carnivoro", "sada"))
+    lista.append(Cebra(100, 20, "Herviboro", "sada"))
+    lista.append(Cebra(100, 20, "Herviboro", "sada"))
+    lista.append(Cerdo(100, 25, "Omnivoro", "Mamifero"))
+    lista.append(Jirafa(100, 10, "Herviboro", "Mamifero"))
+    lista.append(Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797"))
+    lista.append(Leopardo(100, 40, "Carnivoro", "sada"))
+    lista.append(Leopardo(100, 40, "Carnivoro", "sada"))
+    lista.append(Suricata(100, 40, "Insectivoro", "sada"))
+    lista.append(Jabali(100, 40, "Omnivoro", "sada"))
 
 
 # Agrega plantas alrededor del mapa
@@ -209,13 +209,8 @@ while True:
         hora += 1
         ciclos = 0
         for animal in lista:  # Itera sobre la lista de animales
-            animal.vida -= 0.50  # Reduce la vida de cada animal
-            if animal.vida <= 0:
-                all_sprites.remove(animal)  # Elimina el sprite del animal si su vida llega a cero o menos
-                lista.remove(animal)  
+            print(animal.dieta)
 
-            if animal.vida >= 0:
-                all:sprite.remove(sprite)
 
     # Verificar eventos climáticos
     if hora > 10 and not llover and not tormenta:
@@ -239,10 +234,9 @@ while True:
         colisiones = pygame.sprite.spritecollide(sprite, lista, False)
         for colision in colisiones:
             if isinstance(colision, Animal) and isinstance(sprite, Animal):
-                if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
+                if colision.dieta == "Carnivoro" and sprite.dieta != "Carnivoro":
                     sprite.kill()
 
-    print(Lion.vida)
     dibujado.pintar()
     dibujado.botones()
     dibujado.textos()
