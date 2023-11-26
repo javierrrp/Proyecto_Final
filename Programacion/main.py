@@ -209,7 +209,10 @@ while True:
         hora += 1
         ciclos = 0
         for animal in lista:  # Itera sobre la lista de animales
-            print(animal.dieta)
+            animal.vida -= 3
+        if animal.vida <= 0:
+            lista.remove(animal)
+            all_sprites.remove(animal)
 
 
     # Verificar eventos climáticos
@@ -236,6 +239,7 @@ while True:
             if isinstance(colision, Animal) and isinstance(sprite, Animal):
                 if colision.dieta == "Carnivoro" and sprite.dieta != "Carnivoro":
                     sprite.kill()
+                    colision += 4
 
     dibujado.pintar()
     dibujado.botones()
