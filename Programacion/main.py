@@ -202,6 +202,16 @@ while True:
 
     # Dibujar la matriz
     screen.blit(fondo, fondo_rect)
+    
+
+    #Dibujar Lineas en la matriz 
+    #Color, inicio y fin, resolucion, Grosor de linea
+    for i in range(1, nRes[0]):
+        pygame.draw.line(screen, (0, 0, 0), (0, i * 40), (1024, i * 40), 1)
+    for j in range(1, nRes[1]):
+        pygame.draw.line(screen, (0, 0, 0), (j * 40, 0), (j * 40, 768), 1)
+    
+    
 
     # Ciclos
     ciclos += 1
@@ -210,9 +220,8 @@ while True:
         ciclos = 0
         for animal in lista:  # Itera sobre la lista de animales
             animal.vida -= 3
-        if animal.vida <= 0:
-            lista.remove(animal)
-            all_sprites.remove(animal)
+            if animal.vida <= 0:
+                animal.image = pygame.transform.flip(animal.image, False, True)
 
 
     # Verificar eventos climáticos
@@ -239,7 +248,7 @@ while True:
             if isinstance(colision, Animal) and isinstance(sprite, Animal):
                 if colision.dieta == "Carnivoro" and sprite.dieta != "Carnivoro":
                     sprite.kill()
-                    colision += 4
+                    colision.vida += 4
 
     dibujado.pintar()
     dibujado.botones()
