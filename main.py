@@ -4,15 +4,20 @@ from pygame.sprite import Sprite
 import random as ra
 import time
 from organismo import *
+from ambiente import *
 from animal import *
 from planta import *
-from ambiente import *
+
+
+# x = 560 
+# x = 600 
+# y = 640
 
 # Inicializar Pygame
 pygame.init()
 
 # Crear ventana de Simulador
-nRes = [1268, 768, 960]
+nRes = [1268, 760, 960]
 screen = pygame.display.set_mode((nRes[0],nRes[1]))
 
 clock = pygame.time.Clock()
@@ -83,25 +88,23 @@ for i in range(0,2):
     lista.append(Leon(100, 30, "Carnivoro", "sada"))
     lista.append(Leona(100, 40, "Carnivoro", "sada"))
     lista.append(Cebra(100, 20, "Herviboro", "sada"))
-    lista.append(Cebra(100, 20, "Herviboro", "sada"))
     lista.append(Cerdo(100, 25, "Omnivoro", "Mamifero"))
     lista.append(Jirafa(100, 10, "Herviboro", "Mamifero"))
     lista.append(Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797"))
     lista.append(Leopardo(100, 40, "Carnivoro", "sada"))
-    lista.append(Leopardo(100, 40, "Carnivoro", "sada"))
-    lista.append(Suricata(100, 40, "Insectivoro", "sada", "s"))
-    lista.append(Jabali(100, 40, "Omnivoro", "sada", "s"))
+    lista.append(Suricata(100, 40, "Insectivoro", "sada"))
+    lista.append(Jabali(100, 40, "Omnivoro", "sada"))
 
 # Agrega plantas alrededor del mapa
 listaplantas = []
 for i in range(0,10):
-    listaplantas.append(Planta1(ra.randint(0, 950), ra.randint(0, 768), 100, 12))
-    listaplantas.append(Planta2(ra.randint(0, 950), ra.randint(0, 768), 100, 12))
+    listaplantas.append(Planta1(ra.randint(0, 25) * 40 , (ra.randint(0, 19) * 40), 100, 12))
+    listaplantas.append(Planta2(ra.randint(0, 25) * 40 , (ra.randint(0, 19) * 40), 100, 12))
 
 # Creacion animales
 all_sprites = pygame.sprite.Group()
 all_sprites.add(listaplantas , lista)
-
+ 
 
 dibujado = Panel()
 
@@ -200,10 +203,6 @@ while True:
     else:
         tormenta = False
 
-
-    all_sprites.draw(screen)
-    all_sprites.update()
-    
     for sprite in lista:
         colisiones = pygame.sprite.spritecollide(sprite, lista, False)
         for colision in colisiones:
@@ -211,10 +210,13 @@ while True:
                 if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
                     sprite.kill()
 
+    all_sprites.draw(screen)
+    all_sprites.update()
 
 
     dibujado.pintar()
     dibujado.botones()
-    
+
     pygame.display.flip()
     clock.tick(40)
+    

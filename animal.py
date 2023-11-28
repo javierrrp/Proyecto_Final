@@ -20,61 +20,52 @@ class Animal(Organismo):
 class Leon(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
+        self.vida = vida
         self.image = pygame.image.load("Animales/leon.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,960)
-        self.rect.y = ra.randint(0,768)
-        self.speed = 1  # Velocidad muy baja para movimiento lento
-        self.subpix = 6
-        self.subx = self.rect.x * self.subpix + 3  # Ajuste para centrar en la casilla
-        self.suby = self.rect.y * self.subpix + 3  # Ajuste para centrar en la casilla
+        self.rect.x = ra.randint(0, 25) * 40 # Centrar en una casilla
+        self.rect.y = ra.randint(0, 19) * 40 # Centrar en una casilla
+        self.target_x = self.rect.x  # Destino x en casilla
+        self.target_y = self.rect.y  # Destino y en casilla
+        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 500)
         self.direction = None  # Dirección inicial
-        
+
     def update(self):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
-            if direction == 1:
-                self.direction = "up"  # Actualiza la dirección en self.direction
-            elif direction == 2:
-                self.direction = "down"
-            elif direction == 3:
-                self.direction = "left"
-            elif direction == 4:
-                self.direction = "right"
-
-        if self.direction == "up" and self.rect.y > 0:
-            self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
-            self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 0:
-            self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 960 - self.rect.width:
-            self.subx += self.speed
-        else: 
             self.direction = ra.choice(["up", "down", "left", "right"])
+            # Calcular la nueva posición de destino dentro de la cuadrícula
+            if self.direction == "up" and self.rect.y > 0:
+                self.target_y = max(0, self.rect.y - 40)
+            elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                self.target_y = min(760 - self.rect.height, self.rect.y + 40)
+            elif self.direction == "left" and self.rect.x > 0:
+                self.target_x = max(0, self.rect.x - 40)
+            elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                self.target_x = min(920 - self.rect.width, self.rect.x + 40)
 
-        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
-        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
-
-        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
-        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
-
+        # Mover hacia la posición de destino (suaviza el movimiento)
+        if self.rect.x < self.target_x:
+            self.rect.x += min(self.speed, self.target_x - self.rect.x)
+        elif self.rect.x > self.target_x:
+            self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+        elif self.rect.y < self.target_y:
+            self.rect.y += min(self.speed, self.target_y - self.rect.y)
+        elif self.rect.y > self.target_y:
+            self.rect.y -= min(self.speed, self.rect.y - self.target_y)
 class Leona(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
+        self.vida = vida
         self.image = pygame.image.load("Animales/leona.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,960)
-        self.rect.y = ra.randint(0,768)
-        self.speed = 1  # Velocidad muy baja para movimiento lento
-        self.subpix = 6
-        self.subx = self.rect.x * self.subpix + 3  # Ajuste para centrar en la casilla
-        self.suby = self.rect.y * self.subpix + 3  # Ajuste para centrar en la casilla
+        self.rect.x = ra.randint(0, 25) * 40 # Centrar en una casilla
+        self.rect.y = ra.randint(0, 19) * 40 # Centrar en una casilla
+        self.target_x = self.rect.x  # Destino x en casilla
+        self.target_y = self.rect.y  # Destino y en casilla
+        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 500)
         self.direction = None  # Dirección inicial
 
@@ -82,338 +73,297 @@ class Leona(Animal):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
-            if direction == 1:
-                self.direction = "up"  # Actualiza la dirección en self.direction
-            elif direction == 2:
-                self.direction = "down"
-            elif direction == 3:
-                self.direction = "left"
-            elif direction == 4:
-                self.direction = "right"
+            self.direction = ra.choice(["up", "down", "left", "right"])
+            # Calcular la nueva posición de destino dentro de la cuadrícula
+            if self.direction == "up" and self.rect.y > 0:
+                self.target_y = max(0, self.rect.y - 40)
+            elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                self.target_y = min(760 - self.rect.height, self.rect.y + 40)
+            elif self.direction == "left" and self.rect.x > 0:
+                self.target_x = max(0, self.rect.x - 40)
+            elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                self.target_x = min(920 - self.rect.width, self.rect.x + 40)
 
-        if self.direction == "up" and self.rect.y > 0:
-            self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
-            self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 768 + 300:
-            self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 960 - self.rect.width:
-            self.subx += self.speed
-
-        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
-        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
-
-
-        self.rect.x = round((self.subx - 3) / self.subpix)  # Ajuste para centrar en la casilla
-        self.rect.y = round((self.suby - 3) / self.subpix)  # Ajuste para centrar en la casilla
-
-
+        # Mover hacia la posición de destino (suaviza el movimiento)
+        if self.rect.x < self.target_x:
+            self.rect.x += min(self.speed, self.target_x - self.rect.x)
+        elif self.rect.x > self.target_x:
+            self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+        elif self.rect.y < self.target_y:
+            self.rect.y += min(self.speed, self.target_y - self.rect.y)
+        elif self.rect.y > self.target_y:
+            self.rect.y -= min(self.speed, self.rect.y - self.target_y)
 
 
 class Cebra(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
+        self.vida = vida
         self.image = pygame.image.load("Animales/cebra.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,960)
-        self.rect.y = ra.randint(0,768)
-        self.speed = 1
-        self.subx = self.rect.x * 6  
-        self.suby = self.rect.y * 6
-        self.subpix = 6
+        self.rect.x = ra.randint(0, 25) * 40 # Centrar en una casilla
+        self.rect.y = ra.randint(0, 19) * 40 # Centrar en una casilla
+        self.target_x = self.rect.x  # Destino x en casilla
+        self.target_y = self.rect.y  # Destino y en casilla
+        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 500)
-        self.direction = None  
+        self.direction = None  # Dirección inicial
 
     def update(self):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
-            if direction == 1:
-                self.direction = "up"
-            elif direction == 2:
-                self.direction = "down"
-            elif direction == 3:
-                self.direction = "left"
-            elif direction == 4:
-                self.direction = "right"
+            self.direction = ra.choice(["up", "down", "left", "right"])
+            # Calcular la nueva posición de destino dentro de la cuadrícula
+            if self.direction == "up" and self.rect.y > 0:
+                self.target_y = max(0, self.rect.y - 40)
+            elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                self.target_y = min(760 - self.rect.height, self.rect.y + 40)
+            elif self.direction == "left" and self.rect.x > 0:
+                self.target_x = max(0, self.rect.x - 40)
+            elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                self.target_x = min(920 - self.rect.width, self.rect.x + 40)
 
-        if self.direction == "up" and self.rect.y > 0:
-            self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
-            self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 768 + 300:
-            self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 960 - self.rect.width:
-            self.subx += self.speed
-
-        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
-        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))    
-
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
+        # Mover hacia la posición de destino (suaviza el movimiento)
+        if self.rect.x < self.target_x:
+            self.rect.x += min(self.speed, self.target_x - self.rect.x)
+        elif self.rect.x > self.target_x:
+            self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+        elif self.rect.y < self.target_y:
+            self.rect.y += min(self.speed, self.target_y - self.rect.y)
+        elif self.rect.y > self.target_y:
+            self.rect.y -= min(self.speed, self.rect.y - self.target_y)
 class Cerdo(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
+        self.vida = vida
         self.image = pygame.image.load("Animales/cerdo.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,960)
-        self.rect.y = ra.randint(0,768)
-        self.speed = 1
-        self.subx = self.rect.x * 6  
-        self.suby = self.rect.y * 6
-        self.subpix = 6
+        self.rect.x = ra.randint(0, 25) * 40 # Centrar en una casilla
+        self.rect.y = ra.randint(0, 19) * 40 # Centrar en una casilla
+        self.target_x = self.rect.x  # Destino x en casilla
+        self.target_y = self.rect.y  # Destino y en casilla
+        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 500)
-        self.direction = None  
+        self.direction = None  # Dirección inicial
 
     def update(self):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
-            if direction == 1:
-                self.direction = "up"
-            elif direction == 2:
-                self.direction = "down"
-            elif direction == 3:
-                self.direction = "left"
-            elif direction == 4:
-                self.direction = "right"
+            self.direction = ra.choice(["up", "down", "left", "right"])
+            # Calcular la nueva posición de destino dentro de la cuadrícula
+            if self.direction == "up" and self.rect.y > 0:
+                self.target_y = max(0, self.rect.y - 40)
+            elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                self.target_y = min(760 - self.rect.height, self.rect.y + 40)
+            elif self.direction == "left" and self.rect.x > 0:
+                self.target_x = max(0, self.rect.x - 40)
+            elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                self.target_x = min(920 - self.rect.width, self.rect.x + 40)
 
-        if self.direction == "up" and self.rect.y > 0:
-            self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
-            self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 768 + 300:
-            self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
-            self.subx += self.speed
-
-        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
-        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
-        
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
-
+        # Mover hacia la posición de destino (suaviza el movimiento)
+        if self.rect.x < self.target_x:
+            self.rect.x += min(self.speed, self.target_x - self.rect.x)
+        elif self.rect.x > self.target_x:
+            self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+        elif self.rect.y < self.target_y:
+            self.rect.y += min(self.speed, self.target_y - self.rect.y)
+        elif self.rect.y > self.target_y:
+            self.rect.y -= min(self.speed, self.rect.y - self.target_y)
 class Jirafa(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
+        self.vida = vida
         self.image = pygame.image.load("Animales/jirafa.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,960)
-        self.rect.y = ra.randint(0,768)
-        self.speed = 1
-        self.subx = self.rect.x * 6  
-        self.suby = self.rect.y * 6
-        self.subpix = 6
+        self.rect.x = ra.randint(0, 25) * 40 # Centrar en una casilla
+        self.rect.y = ra.randint(0, 19) * 40 # Centrar en una casilla
+        self.target_x = self.rect.x  # Destino x en casilla
+        self.target_y = self.rect.y  # Destino y en casilla
+        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 500)
-        self.direction = None 
+        self.direction = None  # Dirección inicial
 
     def update(self):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
-            if direction == 1:
-                self.direction = "up" 
-            elif direction == 2:
-                self.direction = "down"
-            elif direction == 3:
-                self.direction = "left"
-            elif direction == 4:
-                self.direction = "right"
+            self.direction = ra.choice(["up", "down", "left", "right"])
+            # Calcular la nueva posición de destino dentro de la cuadrícula
+            if self.direction == "up" and self.rect.y > 0:
+                self.target_y = max(0, self.rect.y - 40)
+            elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                self.target_y = min(760 - self.rect.height, self.rect.y + 40)
+            elif self.direction == "left" and self.rect.x > 0:
+                self.target_x = max(0, self.rect.x - 40)
+            elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                self.target_x = min(920 - self.rect.width, self.rect.x + 40)
 
-        if self.direction == "up" and self.rect.y > 0:
-            self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
-            self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 768 + 300:
-            self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
-            self.subx += self.speed
-
-        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
-        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
-
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
-
+        # Mover hacia la posición de destino (suaviza el movimiento)
+        if self.rect.x < self.target_x:
+            self.rect.x += min(self.speed, self.target_x - self.rect.x)
+        elif self.rect.x > self.target_x:
+            self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+        elif self.rect.y < self.target_y:
+            self.rect.y += min(self.speed, self.target_y - self.rect.y)
+        elif self.rect.y > self.target_y:
+            self.rect.y -= min(self.speed, self.rect.y - self.target_y)
 class Elefante(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
+        self.vida = vida
         self.image = pygame.image.load("Animales/elefante.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,960)
-        self.rect.y = ra.randint(0,768)
-        self.speed = 1
-        self.subx = self.rect.x * 6  
-        self.suby = self.rect.y * 6
-        self.subpix = 6
-        self.rango = ra.randint(0, 800)
-        self.direction = None 
+        self.rect.x = ra.randint(0, 25) * 40 # Centrar en una casilla
+        self.rect.y = ra.randint(0, 19) * 40 # Centrar en una casilla
+        self.target_x = self.rect.x  # Destino x en casilla
+        self.target_y = self.rect.y  # Destino y en casilla
+        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
+        self.rango = ra.randint(0, 500)
+        self.direction = None  # Dirección inicial
 
     def update(self):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
-            if direction == 1:
-                self.direction = "up" 
-            elif direction == 2:
-                self.direction = "down"
-            elif direction == 3:
-                self.direction = "left"
-            elif direction == 4:
-                self.direction = "right"
+            self.direction = ra.choice(["up", "down", "left", "right"])
+            # Calcular la nueva posición de destino dentro de la cuadrícula
+            if self.direction == "up" and self.rect.y > 0:
+                self.target_y = max(0, self.rect.y - 40)
+            elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                self.target_y = min(760 - self.rect.height, self.rect.y + 40)
+            elif self.direction == "left" and self.rect.x > 0:
+                self.target_x = max(0, self.rect.x - 40)
+            elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                self.target_x = min(920 - self.rect.width, self.rect.x + 40)
 
-        if self.direction == "up" and self.rect.y > 0:
-            self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
-            self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 768 + 300:
-            self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
-            self.subx += self.speed
-
-        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
-        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
-
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
+        # Mover hacia la posición de destino (suaviza el movimiento)
+        if self.rect.x < self.target_x:
+            self.rect.x += min(self.speed, self.target_x - self.rect.x)
+        elif self.rect.x > self.target_x:
+            self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+        elif self.rect.y < self.target_y:
+            self.rect.y += min(self.speed, self.target_y - self.rect.y)
+        elif self.rect.y > self.target_y:
+            self.rect.y -= min(self.speed, self.rect.y - self.target_y)
         
 
 class Jabali(Animal):
-    def __init__(self, vida, energia, velocidad, dieta, especies):
+    def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
+        self.vida = vida
         self.image = pygame.image.load("Animales/jabali.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,960)
-        self.rect.y = ra.randint(0,768)
-        self.speed = 1
-        self.subx = self.rect.x * 6  
-        self.suby = self.rect.y * 6
-        self.subpix = 6
+        self.rect.x = ra.randint(0, 25) * 40 # Centrar en una casilla
+        self.rect.y = ra.randint(0, 19) * 40 # Centrar en una casilla
+        self.target_x = self.rect.x  # Destino x en casilla
+        self.target_y = self.rect.y  # Destino y en casilla
+        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 500)
-        self.direction = None 
+        self.direction = None  # Dirección inicial
 
     def update(self):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
-            if direction == 1:
-                self.direction = "up" 
-            elif direction == 2:
-                self.direction = "down"
-            elif direction == 3:
-                self.direction = "left"
-            elif direction == 4:
-                self.direction = "right"
+            self.direction = ra.choice(["up", "down", "left", "right"])
+            # Calcular la nueva posición de destino dentro de la cuadrícula
+            if self.direction == "up" and self.rect.y > 0:
+                self.target_y = max(0, self.rect.y - 40)
+            elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                self.target_y = min(760 - self.rect.height, self.rect.y + 40)
+            elif self.direction == "left" and self.rect.x > 0:
+                self.target_x = max(0, self.rect.x - 40)
+            elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                self.target_x = min(920 - self.rect.width, self.rect.x + 40)
 
-        if self.direction == "up" and self.rect.y > 0:
-            self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
-            self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 768 + 300:
-            self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
-            self.subx += self.speed
-
-        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
-        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
-
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
+        # Mover hacia la posición de destino (suaviza el movimiento)
+        if self.rect.x < self.target_x:
+            self.rect.x += min(self.speed, self.target_x - self.rect.x)
+        elif self.rect.x > self.target_x:
+            self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+        elif self.rect.y < self.target_y:
+            self.rect.y += min(self.speed, self.target_y - self.rect.y)
+        elif self.rect.y > self.target_y:
+            self.rect.y -= min(self.speed, self.rect.y - self.target_y)
 
 
 class Leopardo(Animal):
     def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
+        self.vida = vida
         self.image = pygame.image.load("Animales/leopardo.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,960)
-        self.rect.y = ra.randint(0,768)
-        self.speed = 3
-        self.subx = self.rect.x * 6  
-        self.suby = self.rect.y * 6
-        self.subpix = 6
+        self.rect.x = ra.randint(0, 25) * 40 # Centrar en una casilla
+        self.rect.y = ra.randint(0, 19) * 40 # Centrar en una casilla
+        self.target_x = self.rect.x  # Destino x en casilla
+        self.target_y = self.rect.y  # Destino y en casilla
+        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 500)
-        self.direction = None 
+        self.direction = None  # Dirección inicial
 
     def update(self):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
-            if direction == 1:
-                self.direction = "up" 
-            elif direction == 2:
-                self.direction = "down"
-            elif direction == 3:
-                self.direction = "left"
-            elif direction == 4:
-                self.direction = "right"
+            self.direction = ra.choice(["up", "down", "left", "right"])
+            # Calcular la nueva posición de destino dentro de la cuadrícula
+            if self.direction == "up" and self.rect.y > 0:
+                self.target_y = max(0, self.rect.y - 40)
+            elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                self.target_y = min(760 - self.rect.height, self.rect.y + 40)
+            elif self.direction == "left" and self.rect.x > 0:
+                self.target_x = max(0, self.rect.x - 40)
+            elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                self.target_x = min(920 - self.rect.width, self.rect.x + 40)
 
-        if self.direction == "up" and self.rect.y > 0:
-            self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
-            self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 768 + 300:
-            self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
-            self.subx += self.speed
-
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
+        # Mover hacia la posición de destino (suaviza el movimiento)
+        if self.rect.x < self.target_x:
+            self.rect.x += min(self.speed, self.target_x - self.rect.x)
+        elif self.rect.x > self.target_x:
+            self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+        elif self.rect.y < self.target_y:
+            self.rect.y += min(self.speed, self.target_y - self.rect.y)
+        elif self.rect.y > self.target_y:
+            self.rect.y -= min(self.speed, self.rect.y - self.target_y)
 
 
 class Suricata(Animal):
-    def __init__(self, vida, energia, velocidad, dieta, especies):
+    def __init__(self, vida, energia, dieta, especies):
         super().__init__(vida, energia, dieta, especies)
-        self.vida = 100
+        self.vida = vida
         self.image = pygame.image.load("Animales/suricata.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = ra.randint(0,960)
-        self.rect.y = ra.randint(0,768)
-        self.speed = 3
-        self.subx = self.rect.x * 6  
-        self.suby = self.rect.y * 6
-        self.subpix = 6
+        self.rect.x = ra.randint(0, 25) * 40 # Centrar en una casilla
+        self.rect.y = ra.randint(0, 19) * 40 # Centrar en una casilla
+        self.target_x = self.rect.x  # Destino x en casilla
+        self.target_y = self.rect.y  # Destino y en casilla
+        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 500)
-        self.direction = None  
+        self.direction = None  # Dirección inicial
 
     def update(self):
         self.rango -= 1
         if self.rango < 0:
             self.rango = ra.randint(0, 500)
-            direction = ra.randint(1, 4)
-            if direction == 1:
-                self.direction = "up" 
-            elif direction == 2:
-                self.direction = "down"
-            elif direction == 3:
-                self.direction = "left"
-            elif direction == 4:
-                self.direction = "right"
+            self.direction = ra.choice(["up", "down", "left", "right"])
+            # Calcular la nueva posición de destino dentro de la cuadrícula
+            if self.direction == "up" and self.rect.y > 0:
+                self.target_y = max(0, self.rect.y - 40)
+            elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                self.target_y = min(760 - self.rect.height, self.rect.y + 40)
+            elif self.direction == "left" and self.rect.x > 0:
+                self.target_x = max(0, self.rect.x - 40)
+            elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                self.target_x = min(920 - self.rect.width, self.rect.x + 40)
 
-        if self.direction == "up" and self.rect.y > 0:
-            self.suby -= self.speed
-        elif self.direction == "down" and self.rect.y < 768 - self.rect.height:
-            self.suby += self.speed
-        elif self.direction == "left" and self.rect.x > 768 + 300:
-            self.subx -= self.speed
-        elif self.direction == "right" and self.rect.x < 974 - self.rect.width:
-            self.subx += self.speed
-
-        self.subx = max(0, min(self.subx, 960 * self.subpix - self.rect.width))
-        self.suby = max(0, min(self.suby, 768 * self.subpix - self.rect.height))
-
-        self.rect.x = round(self.subx / self.subpix)
-        self.rect.y = round(self.suby / self.subpix)
+        # Mover hacia la posición de destino (suaviza el movimiento)
+        if self.rect.x < self.target_x:
+            self.rect.x += min(self.speed, self.target_x - self.rect.x)
+        elif self.rect.x > self.target_x:
+            self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+        elif self.rect.y < self.target_y:
+            self.rect.y += min(self.speed, self.target_y - self.rect.y)
+        elif self.rect.y > self.target_y:
+            self.rect.y -= min(self.speed, self.rect.y - self.target_y)
