@@ -188,17 +188,17 @@ ciclos = 0
 #Crea animales
 lista =[]
 for i in range(0,2):
-    lista.append(Leon(100, 30, "Carnivoro", "sada"))
-    lista.append(Leona(100, 40, "Carnivoro", "sada"))
-    lista.append(Cebra(100, 20, "Herviboro", "sada"))
-    lista.append(Cebra(100, 20, "Herviboro", "sada"))
-    lista.append(Cerdo(100, 25, "Omnivoro", "Mamifero"))
-    lista.append(Jirafa(100, 10, "Herviboro", "Mamifero"))
-    lista.append(Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797"))
-    lista.append(Leopardo(100, 40, "Carnivoro", "sada"))
-    lista.append(Leopardo(100, 40, "Carnivoro", "sada"))
-    lista.append(Suricata(100, 40, "Insectivoro", "sada"))
-    lista.append(Jabali(100, 40, "Omnivoro", "sada"))
+    lista.append(Leon(100, 30, "Carnivoro", "sada", ra.choice(["macho", "hembra"])))
+    lista.append(Leona(100, 40, "Carnivoro", "sada", ra.choice(["macho", "hembra"])))
+    lista.append(Cebra(100, 20, "Herviboro", "sada", ra.choice(["macho","hembra"])))
+    lista.append(Cebra(100, 20, "Herviboro", "sada", ra.choice(["macho","hembra"])))
+    lista.append(Cerdo(100, 25, "Omnivoro", "Mamifero", ra.choice(["macho","hembra"])))
+    lista.append(Jirafa(100, 10, "Herviboro", "Mamifero", ra.choice(["macho","hembra"])))
+    lista.append(Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797", ra.choice(["macho","hembra"])))
+    lista.append(Leopardo(100, 40, "Carnivoro", "sada", ra.choice(["macho","hembra"])))
+    lista.append(Leopardo(100, 40, "Carnivoro", "sada", ra.choice(["macho","hembra"])))
+    lista.append(Suricata(100, 40, "Insectivoro", "sada", ra.choice(["macho","hembra"])))
+    lista.append(Jabali(100, 40, "Omnivoro", "sada", ra.choice(["macho","hembra"])))
 
 
 # Agrega plantas alrededor del mapa
