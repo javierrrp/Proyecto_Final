@@ -299,6 +299,7 @@ while True:
         for animal in lista:  # Itera sobre la lista de animales
             animal.vida -= 3
             if animal.vida <= 0:
+                animal.vivo = False
                 animal.image = pygame.transform.flip(animal.image, False, True)
 
     # Controlar la lluvia y la tormenta
