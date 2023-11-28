@@ -30,5 +30,3 @@ class Planta2(Planta):
         self.rect = self.image.get_rect()
         self.rect.x = posicionx
         self.rect.y = posiciony
-        
-        
