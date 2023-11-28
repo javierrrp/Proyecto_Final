@@ -64,12 +64,9 @@ class Panel:
         a = pygame.Rect(self.ubicacionx, self.ubicaciony, self.ancho, self.a)
         screen.fill((52,52,52), a)
 
-    def botones(self):
-        tiempo = self.myFont.render(f'Hora: {hora:02d}:{minutos:02d}', True, (220, 220, 220))
-        screen.blit(tiempo, (1020, 20))
-
 ciclos = 0
-frecuencia = 100
+ciclos2 = 0
+frecuencia = 1000
 
 # Sprites
 nubes = pygame.sprite.Group()
@@ -97,10 +94,16 @@ for i in range(0,2):
 
 # Agrega plantas alrededor del mapa
 listaplantas = []
-for i in range(0,10):
-    listaplantas.append(Planta1(ra.randint(0, 25) * 40 , (ra.randint(0, 19) * 40), 100, 12))
-    listaplantas.append(Planta2(ra.randint(0, 25) * 40 , (ra.randint(0, 19) * 40), 100, 12))
+for i in range(0, 20):
+    x = ra.randint(0, 24) * 40 + 3
+    y = ra.randint(0, 18) * 40 + 3
 
+    while (560 <= x <= 600) and (640 <= y <= 760):
+        x = ra.randint(0, 25) * 40 + 3
+        y = ra.randint(0, 19) * 40 + 3
+
+    # Agregar plantas después de salir del bucle while
+    listaplantas.append(Planta1(x, y, 100, 12))
 # Creacion animales
 all_sprites = pygame.sprite.Group()
 all_sprites.add(listaplantas , lista)
@@ -134,8 +137,22 @@ while True:
             sys.exit()
 
     # Obtener la hora actual
-    hora = (ciclos // 6) % 24
-    minutos = (ciclos % 6) * 10
+    hora = (ciclos // 60) % 240
+    minutos = (ciclos % 60)
+
+    # Ciclos
+    ciclos += 1
+    if ciclos >= 1440:
+        hora += 1
+        ciclos = 0
+
+    # para que cada ciclo sea de 1 hora
+
+    ciclos2 += 1
+
+    ciclos_pantalla = ciclos2 // 60 # para que cada ciclo dure 1 hora
+
+    dias = ciclos // 1440  # para que ocurra 
 
     # Cambiar el fondo según la hora
     if 4 <= hora < 5:
@@ -162,25 +179,20 @@ while True:
     # Dibujar la matriz
     screen.blit(fondo_actual, fondo_actual.get_rect())
 
-    # Ciclos
-    ciclos += 1
-    if ciclos >= 1000:
-        hora += 1
-        ciclos = 0
-
     # Controlar la lluvia y la tormenta
     if ciclos % frecuencia == 0:
         evento_climatico = ra.choice(["lluvia", "tormenta"])
-        if evento_climatico == "lluvia":
-            llover = True
-            duracion_lluvia = (ra.randint(1, 5) * ra.randint(24, 48))  # Define la duración de la tormenta en ciclos
-            ciclos_lluvia = 0 
-            gotas = [Ambiente.lluvia() for _ in range(500)]
-        elif evento_climatico == "tormenta":
-            tormenta = True
-            duracion_tormenta = 3 * 96  # Define la duración de la tormenta en ciclos
-            ciclos_tormenta = 0
-    
+        if not (llover or tormenta):
+            if evento_climatico == "lluvia":
+                llover = True
+                duracion_lluvia = 5 * ra.randint(24, 48)  # Define la duración de la tormenta en ciclos
+                ciclos_lluvia = 0 
+                gotas = [Ambiente.lluvia() for _ in range(500)]
+            elif evento_climatico == "tormenta":
+                tormenta = True
+                duracion_tormenta = 5 * 96  # Define la duración de la tormenta en ciclos
+                ciclos_tormenta = 0
+        
     #Dibujar Lineas en la matriz 
     #Color, inicio y fin, resolucion, Grosor de linea
     for i in range(1, len(matriz)):
@@ -215,7 +227,13 @@ while True:
 
 
     dibujado.pintar()
-    dibujado.botones()
+
+    dia = dibujado.myFont.render(f'Dias: {dias:2d}', True, (220, 220, 220))
+    screen.blit(dia, (1020, 20))
+    texto_ciclos = dibujado.myFont.render(f'Ciclos: {ciclos_pantalla:2d}', True, (220, 220, 220))
+    screen.blit(texto_ciclos, (1020, 50))
+    tiempo = dibujado.myFont.render(f'Hora: {hora:02d}:{minutos:02d}', True, (220, 220, 220))
+    screen.blit(tiempo, (1020, 80))
 
     pygame.display.flip()
     clock.tick(40)
