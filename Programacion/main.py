@@ -188,8 +188,7 @@ ciclos = 0
 #Crea animales
 lista =[]
 for i in range(0,2):
-    lista.append(Leon(100, 30, "Carnivoro", "sada", ra.choice(["macho", "hembra"])))
-    lista.append(Leona(100, 40, "Carnivoro", "sada", ra.choice(["macho", "hembra"])))
+    lista.append(Tigre(100, 30, "Carnivoro", "sada", ra.choice(["macho","hembra"])))
     lista.append(Cebra(100, 20, "Herviboro", "sada", ra.choice(["macho","hembra"])))
     lista.append(Cebra(100, 20, "Herviboro", "sada", ra.choice(["macho","hembra"])))
     lista.append(Cerdo(100, 25, "Omnivoro", "Mamifero", ra.choice(["macho","hembra"])))
@@ -351,7 +350,7 @@ while True:
                     sprite.kill()
                     colision.vida += 4
 
-    
+    #Herviboros
     for sprite in listaplantas:
         colisiones = pygame.sprite.spritecollide(sprite, lista, False)
         for colision in colisiones:
@@ -360,6 +359,15 @@ while True:
                     sprite.kill()
                     colision.vida += 4
 
+
+    for sprite in lista:
+        colisiones = pygame.sprite.spritecollide(sprite, lista, False)
+        for colision in colisiones:
+            if isinstance(colision, Animal) and isinstance(sprite, Animal):
+                if colision.sexo == "macho" and sprite.sexo == "hembra":
+                     nueva_criatura = colision.crear_nuevo_animal(colision, sprite)  
+                     if nueva_criatura:
+                         lista.append(nueva_criatura)
                     
 
     dibujado.pintar()
