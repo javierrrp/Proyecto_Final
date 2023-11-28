@@ -342,6 +342,7 @@ while True:
     all_sprites.draw(screen)
 
 
+    #Carnivoros
     for sprite in lista:
         colisiones = pygame.sprite.spritecollide(sprite, lista, False)
         for colision in colisiones:
@@ -349,6 +350,17 @@ while True:
                 if colision.dieta == "Carnivoro" and sprite.dieta != "Carnivoro":
                     sprite.kill()
                     colision.vida += 4
+
+    
+    for sprite in listaplantas:
+        colisiones = pygame.sprite.spritecollide(sprite, lista, False)
+        for colision in colisiones:
+            if isinstance(colision, Animal) and isinstance(sprite, Planta):
+                if colision.dieta == "Herviboro" and sprite:
+                    sprite.kill()
+                    colision.vida += 4
+
+                    
 
     dibujado.pintar()
     dibujado.botones()
