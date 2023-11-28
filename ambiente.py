@@ -67,8 +67,14 @@ class Ambiente:
             self.rect.x = ra.randrange(-1000, 0)
             self.rect.y = ra.randrange(-30, 100)
             self.velocidad_x = ra.randrange(1 , 5) # Velocidad horizontal aleatoria
+            self.transparencia = 0
 
         def update(self):
             self.rect.x += self.velocidad_x
             if self.rect.right > nRes[2] + 100:
-                self.kill()
+                self.rect.x = ra.randrange(-1000, 0)
+                self.rect.y = ra.randrange(-30, 100)
+                self.velocidad_x = ra.randrange(1 , 5) # Velocidad horizontal aleatoria
+
+            self.transparencia = min(255, self.transparencia + 1)
+            self.image.set_alpha(self.transparencia)
