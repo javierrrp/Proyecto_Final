@@ -75,6 +75,7 @@ y lo extraen donde ustedes Quieran
   Luego Escriben "Pip3 install pygame" y le dan en enter, esperan a que termine la instalacion
   
 
+-Y Listo, ya estaria instalado el programa, solo le dan en el boton de ![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/a026585b-6452-499b-821e-993ff35343c3) y ya esta
 
 
 
