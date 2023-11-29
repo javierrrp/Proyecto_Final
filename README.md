@@ -36,6 +36,16 @@ Ademas, hay tambien un "Panel de control" que permite al usuario la Inyeccion de
 
 # Guia de Instalacion
 
+-Primero nos Metemos al siguiente link para descargar el Visual Studio Code:
+https://code.visualstudio.com/download
+
+![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/eb5013ba-6d10-4beb-ae3d-53d1a2b005d7)
+
+
+Una vez ahi, debemos seleccionar nuestro Sistema Operativo, En nuestro caso fue Windows, Nosotros no lo descargamos porque ya lo tenemos.
+
+
+
 
 
 
