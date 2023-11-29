@@ -42,7 +42,11 @@ https://code.visualstudio.com/download
 ![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/eb5013ba-6d10-4beb-ae3d-53d1a2b005d7)
 
 
-Una vez ahi, debemos seleccionar nuestro Sistema Operativo, En nuestro caso fue Windows, Nosotros no lo descargamos porque ya lo tenemos.
+Una vez ahi, debemos seleccionar nuestro Sistema Operativo, En nuestro caso fue Windows, Esperan a que se descargue y despues lo instalan. Nosotros no lo descargamos porque ya lo tenemos.
+
+
+-
+
 
 
 
