@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-from pygame.sprite import Sprite
+from pygame.sprite import Sprite, Group
 import random as ra
 import time
 from organismo import *
@@ -59,6 +59,7 @@ class Panel:
         self.ancho = 320
         self.a = 768
         self.myFont = pygame.font.SysFont("Calibri", 30)
+        self.myFont2 = pygame.font.SysFont("Calibri", 20)
     
     def pintar(self):
         a = pygame.Rect(self.ubicacionx, self.ubicaciony, self.ancho, self.a)
@@ -66,44 +67,65 @@ class Panel:
 
 ciclos = 0
 ciclos2 = 0
-frecuencia = 1000
+frecuencia = 500
 
 # Sprites
 nubes = pygame.sprite.Group()
 
 # Blucle de las nubes
-
-for i in range(100):
+for i in range(50):
     nube = Ambiente.Tormenta()
     nubes.add(nube)
+
+# trueno
+
+trueno = Group()
+
+#musica
+#pygame.mixer.music.load('music.mp3') # Importa musica 
+#pygame.mixer.music.play(1)
+#pygame.mixer.music.set_volume(0.05) # nivel de volumen
 
 
 
 #Crea animales
 lista =[]
-for i in range(0,2):
-    lista.append(Leon(100, 30, "Carnivoro", "sada"))
-    lista.append(Leona(100, 40, "Carnivoro", "sada"))
-    lista.append(Cebra(100, 20, "Herviboro", "sada"))
-    lista.append(Cerdo(100, 25, "Omnivoro", "Mamifero"))
-    lista.append(Jirafa(100, 10, "Herviboro", "Mamifero"))
-    lista.append(Elefante(100, 40, "Herviboro", "L. africana Blumenbach, 1797"))
-    lista.append(Leopardo(100, 40, "Carnivoro", "sada"))
-    lista.append(Suricata(100, 40, "Insectivoro", "sada"))
-    lista.append(Jabali(100, 40, "Omnivoro", "sada"))
+for i in range(0,4):
+    lista.append(Cerdo(100, 25, "Omnivoro", ra.choice(["Mamifero", "Tulipan", "Herviboro", "Margaritas"]), ra.choice(["macho","hembra"])))
+    lista.append(Tigre(100, 30, "Carnivoro", ra.choice(["Mamifero", "Herviboro"]), ra.choice(["macho","hembra"])))
+    lista.append(Leopardo(100, 40, "Carnivoro", ra.choice(["Mamifero", "Herviboro"]), ra.choice(["macho","hembra"])))
+    lista.append(Cebra(100, 20, "Herviboro", "Fotosintesis", ra.choice(["macho","hembra"])))
+    lista.append(Jirafa(100, 10, "Herviboro", "Fotosintesis", ra.choice(["macho","hembra"])))
+    lista.append(Elefante(100, 40, "Herviboro", "Fotosintesis", ra.choice(["macho","hembra"])))
+    lista.append(Suricata(100, 40, "Insectivoro", ra.choice(["Tulipan", "Margaritas", "Insecto"]), ra.choice(["macho","hembra"])))
+    lista.append(Insecto(100, 25, "Insecto", ra.choice(["Tulipan", "Margaritas"]), ra.choice(["macho","hembra"])))
 
 # Agrega plantas alrededor del mapa
 listaplantas = []
+for i in range(0, 6):
+    x = ra.randint(21, 24) * 40 + 1
+    y = ra.randint(5, 6) * 40 + 1
+
+    listaplantas.append(Planta2(x, y, 100, 12, "Tulipan", "Fotosintesis"))
+
+for i in range(0, 5):
+    x = ra.randint(0, 1) * 40 + 4
+    y = ra.randint(3, 4) * 40 + 4
+
+    listaplantas.append(Planta1(x, y, 100, 12, "Margaritas", "Fotosintesis"))
+
+for i in range(0, 2):
+    x = ra.randint(0, 1) * 40 + 4
+    y = 18 * 40 + 4
+
+    listaplantas.append(Planta2(x, y, 100, 12, "Tulipan", "Fotosintesis"))
+
 for i in range(0, 20):
-    x = ra.randint(0, 24) * 40 + 3
-    y = ra.randint(0, 18) * 40 + 3
+    x = ra.randint(19, 24) * 40 + 1
+    y = ra.randint(12, 18) * 40 + 1
 
-    while (560 <= x <= 600) and (640 <= y <= 760):
-        x = ra.randint(0, 25) * 40 + 3
-        y = ra.randint(0, 19) * 40 + 3
+    listaplantas.append(Planta1(x, y, 100, 12, "Margaritas", "Fotosintesis"))
 
-    # Agregar plantas después de salir del bucle while
-    listaplantas.append(Planta1(x, y, 100, 12))
 # Creacion animales
 all_sprites = pygame.sprite.Group()
 all_sprites.add(listaplantas , lista)
@@ -124,10 +146,19 @@ F_tormenta = 2
 tormenta = False
 V_tormenta = 2
 
-
+movimiento = True
 # Hora
 hora = 0
 velocidad = 100
+
+#contador de kills
+
+plantas_muertas = 0
+herviboros_muertos = 0
+carnivoros_muertos = 0
+omniboros_muertos = 0
+insectos_muertos = 0
+insectivoros_muertos = 0
 
 # Bucle del Programa
 while True:
@@ -152,7 +183,7 @@ while True:
 
     ciclos_pantalla = ciclos2 // 60 # para que cada ciclo dure 1 hora
 
-    dias = ciclos // 1440  # para que ocurra 
+    dias = ciclos2 // 1440  # para que ocurra 
 
     # Cambiar el fondo según la hora
     if 4 <= hora < 5:
@@ -190,7 +221,7 @@ while True:
                 gotas = [Ambiente.lluvia() for _ in range(500)]
             elif evento_climatico == "tormenta":
                 tormenta = True
-                duracion_tormenta = 5 * 96  # Define la duración de la tormenta en ciclos
+                duracion_tormenta = 10 * ra.randint(24, 48)
                 ciclos_tormenta = 0
         
     #Dibujar Lineas en la matriz 
@@ -200,7 +231,7 @@ while True:
     for j in range(1, len(matriz[0])):
         pygame.draw.line(screen, (0, 0, 0), (j * celda, 0), (j * celda, 768), 1)
     
-    # Mostrar lluvia o tormenta
+     # Mostrar lluvia o tormenta
     if llover and ciclos_lluvia < duracion_lluvia:
         for gota in gotas:
             gota.mostrar()
@@ -209,22 +240,39 @@ while True:
         llover = False
 
     if tormenta and ciclos_tormenta < duracion_tormenta:
-        nubes.update()
-        nubes.draw(screen)
+        all_sprites.add(nubes)
         ciclos_tormenta += 1
     else:
         tormenta = False
+        all_sprites.remove(nubes)
 
-    for sprite in lista:
-        colisiones = pygame.sprite.spritecollide(sprite, lista, False)
+
+    for sprite in all_sprites:
+        colisiones = pygame.sprite.spritecollide(sprite, all_sprites, False)
         for colision in colisiones:
             if isinstance(colision, Animal) and isinstance(sprite, Animal):
-                if colision.dieta == "Carnivoro" and sprite.dieta == "Herviboro":
+                if colision.dieta == "Carnivoro" and sprite.dieta == ra.choice(["Herviboro", "Insectivoro", "Omnivoro"]):
                     sprite.kill()
+                    herviboros_muertos +=1
+                    insectivoros_muertos += 1
+                    omniboros_muertos +=1
+                elif colision.dieta == "Insectivoro" and sprite.dieta == "Insecto":
+                    sprite.kill()
+                    insectos_muertos +=1
+                elif colision.dieta == "Omnivoro" and sprite.dieta == ra.choice(["Carnivoro", "Herviboro", "Insectivoro"]):
+                    sprite.kill()
+                    carnivoros_muertos +=1
+                    herviboros_muertos +=1
+            elif isinstance(colision, Animal) and isinstance(sprite, Planta):
+                if colision.dieta == "Herviboro" and sprite.dieta == "Fotosintesis":
+                    sprite.kill()
+                    plantas_muertas += 1 
+                if colision.dieta == "Omnivoro" and sprite.dieta == "Fotosintesis":
+                    sprite.kill()
+                    plantas_muertas += 1 
 
     all_sprites.draw(screen)
     all_sprites.update()
-
 
     dibujado.pintar()
 
@@ -234,6 +282,16 @@ while True:
     screen.blit(texto_ciclos, (1020, 50))
     tiempo = dibujado.myFont.render(f'Hora: {hora:02d}:{minutos:02d}', True, (220, 220, 220))
     screen.blit(tiempo, (1020, 80))
+    tiempo = dibujado.myFont2.render(f'Plantas muertas : {plantas_muertas:01d}', True, (220, 220, 220))
+    screen.blit(tiempo, (1020, 300))
+    tiempo = dibujado.myFont2.render(f'Carnivoros muertos : {carnivoros_muertos:01d}', True, (220, 220, 220))
+    screen.blit(tiempo, (1020, 320))
+    tiempo = dibujado.myFont2.render(f'Herviboros muertos : {herviboros_muertos:01d}', True, (220, 220, 220))
+    screen.blit(tiempo, (1020, 340))
+    tiempo = dibujado.myFont2.render(f'Insectivoro muertos : {insectivoros_muertos:01d}', True, (220, 220, 220))
+    screen.blit(tiempo, (1020, 360))
+    tiempo = dibujado.myFont2.render(f'Insectos muertos : {insectos_muertos:01d}', True, (220, 220, 220))
+    screen.blit(tiempo, (1020, 380))
 
     pygame.display.flip()
     clock.tick(40)
