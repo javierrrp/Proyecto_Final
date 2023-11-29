@@ -13,7 +13,7 @@ El siguiente proyecto busca crear un Programa Interactivo que represente un Ecos
 Se busca Ofrecer una representacion realista de como es el Ciclo de la vida y la reproduccion, y las diversas interacciones entre la flora y fauna. <br>
 El simulador posibilitará que los organismos interactúen, teniendo atributos como velocidad, vida y energía, así como comportamientos como explorar, cazar, reproducirse y morir. Se diseño para adaptarse a distintos biomas y condiciones del entorno, siendo lo suficientemente flexible para ello. <br>
 
-Ademas, hay tambien un "Panel de control" que permite al usuario la Inyeccion de diversos eventos climaticos ya asignados en el programa, (como lluvia o tormenta)
+Ademas, hay tambien un "Panel de control" que permite al usuario la Inyeccion de diversos eventos climaticos ya asignados en el programa, y tambien obtener informacion de la Flora y Fauna existene en el ecosistema
 
 
 
