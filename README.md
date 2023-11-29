@@ -1,10 +1,10 @@
 # Proyecto_Final
 
 
-Nombres: Javier Poblete, Joaquin Cantero
-Asignatura: Programacion 2 
-Profesor: Ignacio Lincolao
-Seccion 2
+Nombres: Javier Poblete, Joaquin Cantero <br>
+Asignatura: Programacion 2 <br>
+Profesor: Ignacio Lincolao <br>
+Seccion 2 <br>
 
 
 
