@@ -334,6 +334,8 @@ while True:
                     plantas_muertas += 1 
 
 
+
+
                     
     all_sprites.draw(screen)
     all_sprites.update()
