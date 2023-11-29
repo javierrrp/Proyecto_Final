@@ -67,7 +67,7 @@ class Panel:
         self.lluvia_button = pygame.Rect(1060, 400, 150, 50)  # Botón de tormenta
         self.myFont = pygame.font.SysFont("Calibri", 30) # tipo de letra y tamaño
         self.myFont2 = pygame.font.SysFont("Calibri", 20) # lo mismo pero para otros datos
-    
+        
     def pintar(self):
         a = pygame.Rect(self.ubicacionx, self.ubicaciony, self.ancho, self.a) # crea el cuadrado en las coordenadas anteriores
         screen.fill((52,52,52), a) # pinta el panel de color gris
@@ -89,7 +89,6 @@ for i in range(150):
 pygame.mixer.music.load('music.mp3') # Importa musica 
 pygame.mixer.music.play(1)
 pygame.mixer.music.set_volume(0.05) # nivel de volumen
-
 
 #Crea animales
 lista =[]
@@ -122,7 +121,6 @@ for i in range(0, 10):
     while x >= 960 or y >= 720:
         x = ra.randint(12, 24) * 40 + 1
         y = ra.randint(0, 8) * 40 + 1
-
     listaplantas.append(Planta2(x, y, 100, 12, "Margaritas", "Fotosintesis"))
 
 for i in range(0, 10):
