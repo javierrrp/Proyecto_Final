@@ -86,7 +86,9 @@ y lo extraen donde ustedes Quieran
 Ademas se tiene un monitoreo de los animales vivos y muertos, lo mismo con las plantas, cada vez  que un animal muera, el animal se agregara al conteo que se tiene.
 
 
+- Hay una cuenta de ciclos en el codigo en el bucle principal, cuando hayan 1440 ciclos, una variable llamada "hora" aumentara, y segun la hora, el fondo de la matriz ira cambiando (Ej si es noche, sera oscura la matriz)
 
+- Por cada ciclo, la vida de los animales ira disminuyendo un 0.01, y cuando la vida de los animales sea menor o igual a 0, el animal dejara de moverse, y entra en descomposicion... Sumado a eso, se agrega el animal muerto al contador de animales muertos.
 
 
 
