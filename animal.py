@@ -10,12 +10,14 @@ class Animal(Organismo):
         super().__init__(0, 0, vida, energia)  # Ejemplo de posición inicial en (0, 0)
         self.dieta = dieta
         self.especies = especies
-
-    def cazar(self):  
-        pass
-        
-    def descomposicion(self):
-        pass
+    def dormir(self, sprites):
+        for sprite in sprites:
+            if isinstance(sprite, Animal) and sprite.movimiento:
+                sprite.movimiento = False
+    def despertar(self, sprites):
+        for sprite in sprites:
+            if isinstance(sprite, Animal) and not sprite.movimiento:
+                sprite.movimiento = True
 
 class Tigre(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
@@ -33,6 +35,7 @@ class Tigre(Animal):
         self.movimiento = True
         self.sexo = sexo
         self.vivo = True
+        self.descomposicion = pygame.time.get_ticks() + 5000
 
     def update(self):
         if self.movimiento and self.vivo: 
@@ -413,6 +416,7 @@ class Insecto(Animal):
         self.direction = None  # Dirección inicial
         self.movimiento = True
         self.vivo = True
+        self.sexo = sexo
 
     def update(self):
         if self.movimiento and self.vivo: 
