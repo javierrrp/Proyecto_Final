@@ -35,37 +35,38 @@ class Tigre(Animal):
         self.movimiento = True
         self.sexo = sexo
         self.vivo = True
-        self.descomposicion = pygame.time.get_ticks() + 5000
+        self.descomposicion = 255
 
     def update(self):
-        if self.movimiento and self.vivo: 
-            self.rango -= 1
-            if self.rango < 0:
-                self.rango = ra.randint(0, 100)
-                self.direction = ra.choice(["up", "down", "left", "right"])
-                # Calcular la nueva posición de destino dentro de la cuadrícula
-                grid_x = self.rect.x // 40 * 40
-                grid_y = self.rect.y // 40 * 40
-
-                if self.direction == "up" and self.rect.y > 0:
-                    self.target_y = max(0, grid_y - 40)
-                elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
-                    self.target_y = min(760 - self.rect.height, grid_y + 40)
-                elif self.direction == "left" and self.rect.x > 0:
-                    self.target_x = max(0, grid_x - 40)
-                elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
-                    self.target_x = min(920 - self.rect.width, grid_x + 40)
-
-
-            # Mover hacia la posición de destino (suaviza el movimiento)
-            if self.rect.x < self.target_x:
-                self.rect.x += min(self.speed, self.target_x - self.rect.x)
-            elif self.rect.x > self.target_x:
-                self.rect.x -= min(self.speed, self.rect.x - self.target_x)
-            elif self.rect.y < self.target_y:
-                self.rect.y += min(self.speed, self.target_y - self.rect.y)
-            elif self.rect.y > self.target_y:
-                self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        if self.vivo:
+            if self.movimiento: 
+                self.rango -= 1
+                if self.rango < 0:
+                    self.rango = ra.randint(0, 100)
+                    self.direction = ra.choice(["up", "down", "left", "right"])
+                    # Calcular la nueva posición de destino dentro de la cuadrícula
+                    grid_x = self.rect.x // 40 * 40
+                    grid_y = self.rect.y // 40 * 40
+                    if self.direction == "up" and self.rect.y > 0:
+                        self.target_y = max(0, grid_y - 40)
+                    elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                        self.target_y = min(760 - self.rect.height, grid_y + 40)
+                    elif self.direction == "left" and self.rect.x > 0:
+                        self.target_x = max(0, grid_x - 40)
+                    elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                        self.target_x = min(920 - self.rect.width, grid_x + 40)
+                # Mover hacia la posición de destino (suaviza el movimiento)
+                if self.rect.x < self.target_x:
+                    self.rect.x += min(self.speed, self.target_x - self.rect.x)
+                elif self.rect.x > self.target_x:
+                    self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+                elif self.rect.y < self.target_y:
+                    self.rect.y += min(self.speed, self.target_y - self.rect.y)
+                elif self.rect.y > self.target_y:
+                    self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        else:             
+            self.descomposicion = max(0 , self.descomposicion - 1)
+            self.image.set_alpha(self.descomposicion)
 
 class Cebra(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
@@ -83,32 +84,38 @@ class Cebra(Animal):
         self.movimiento = True
         self.sexo = sexo
         self.vivo = True
+        self.descomposicion = 255
 
     def update(self):
-        if self.vivo and self.movimiento: 
-            self.rango -= 1
-            if self.rango < 0:
-                self.rango = ra.randint(0, 500)
-                self.direction = ra.choice(["up", "down", "left", "right"])
-                # Calcular la nueva posición de destino dentro de la cuadrícula
-                if self.direction == "up" and self.rect.y > 0:
-                    self.target_y = max(0, self.rect.y - 40)
-                elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
-                    self.target_y = min(760 - self.rect.height, self.rect.y + 40)
-                elif self.direction == "left" and self.rect.x > 0:
-                    self.target_x = max(0, self.rect.x - 40)
-                elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
-                    self.target_x = min(920 - self.rect.width, self.rect.x + 40)
-
-            # Mover hacia la posición de destino (suaviza el movimiento)
-            if self.rect.x < self.target_x:
-                self.rect.x += min(self.speed, self.target_x - self.rect.x)
-            elif self.rect.x > self.target_x:
-                self.rect.x -= min(self.speed, self.rect.x - self.target_x)
-            elif self.rect.y < self.target_y:
-                self.rect.y += min(self.speed, self.target_y - self.rect.y)
-            elif self.rect.y > self.target_y:
-                self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        if self.vivo:
+            if self.movimiento: 
+                self.rango -= 1
+                if self.rango < 0:
+                    self.rango = ra.randint(0, 100)
+                    self.direction = ra.choice(["up", "down", "left", "right"])
+                    # Calcular la nueva posición de destino dentro de la cuadrícula
+                    grid_x = self.rect.x // 40 * 40
+                    grid_y = self.rect.y // 40 * 40
+                    if self.direction == "up" and self.rect.y > 0:
+                        self.target_y = max(0, grid_y - 40)
+                    elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                        self.target_y = min(760 - self.rect.height, grid_y + 40)
+                    elif self.direction == "left" and self.rect.x > 0:
+                        self.target_x = max(0, grid_x - 40)
+                    elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                        self.target_x = min(920 - self.rect.width, grid_x + 40)
+                # Mover hacia la posición de destino (suaviza el movimiento)
+                if self.rect.x < self.target_x:
+                    self.rect.x += min(self.speed, self.target_x - self.rect.x)
+                elif self.rect.x > self.target_x:
+                    self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+                elif self.rect.y < self.target_y:
+                    self.rect.y += min(self.speed, self.target_y - self.rect.y)
+                elif self.rect.y > self.target_y:
+                    self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        else:             
+            self.descomposicion = max(0 , self.descomposicion - 1)
+            self.image.set_alpha(self.descomposicion)
 
 class Cerdo(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
@@ -126,44 +133,38 @@ class Cerdo(Animal):
         self.movimiento = True
         self.sexo = sexo
         self.vivo = True
-
-    def reproducirse(self, cerdo2):
-        if self.sexo != cerdo2.sexo:
-            hijo = Cerdo(100, 25, "Omnivoro", ra.choice(["Mamifero", "Tulipan", "Herviboro", "Margaritas"]), ra.choice(["macho", "hembra"]))
-            return hijo
-        else:
-            return None
+        self.descomposicion = 255
 
     def update(self):
-        if self.movimiento and self.vivo: 
-            self.rango -= 1
-            if self.rango < 0:
-                self.rango = ra.randint(0, 100)
-                self.direction = ra.choice(["up", "down", "left", "right"])
-                # Calcular la nueva posición de destino dentro de la cuadrícula
-                grid_x = self.rect.x // 40 * 40
-                grid_y = self.rect.y // 40 * 40
-
-                if self.direction == "up" and self.rect.y > 0:
-                    self.target_y = max(0, grid_y - 40)
-                elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
-                    self.target_y = min(760 - self.rect.height, grid_y + 40)
-                elif self.direction == "left" and self.rect.x > 0:
-                    self.target_x = max(0, grid_x - 40)
-                elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
-                    self.target_x = min(920 - self.rect.width, grid_x + 40)
-
-
-            # Mover hacia la posición de destino (suaviza el movimiento)
-            if self.rect.x < self.target_x:
-                self.rect.x += min(self.speed, self.target_x - self.rect.x)
-            elif self.rect.x > self.target_x:
-                self.rect.x -= min(self.speed, self.rect.x - self.target_x)
-            elif self.rect.y < self.target_y:
-                self.rect.y += min(self.speed, self.target_y - self.rect.y)
-            elif self.rect.y > self.target_y:
-                self.rect.y -= min(self.speed, self.rect.y - self.target_y)
-
+        if self.vivo:
+            if self.movimiento: 
+                self.rango -= 1
+                if self.rango < 0:
+                    self.rango = ra.randint(0, 100)
+                    self.direction = ra.choice(["up", "down", "left", "right"])
+                    # Calcular la nueva posición de destino dentro de la cuadrícula
+                    grid_x = self.rect.x // 40 * 40
+                    grid_y = self.rect.y // 40 * 40
+                    if self.direction == "up" and self.rect.y > 0:
+                        self.target_y = max(0, grid_y - 40)
+                    elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                        self.target_y = min(760 - self.rect.height, grid_y + 40)
+                    elif self.direction == "left" and self.rect.x > 0:
+                        self.target_x = max(0, grid_x - 40)
+                    elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                        self.target_x = min(920 - self.rect.width, grid_x + 40)
+                # Mover hacia la posición de destino (suaviza el movimiento)
+                if self.rect.x < self.target_x:
+                    self.rect.x += min(self.speed, self.target_x - self.rect.x)
+                elif self.rect.x > self.target_x:
+                    self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+                elif self.rect.y < self.target_y:
+                    self.rect.y += min(self.speed, self.target_y - self.rect.y)
+                elif self.rect.y > self.target_y:
+                    self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        else:             
+            self.descomposicion = max(0 , self.descomposicion - 1)
+            self.image.set_alpha(self.descomposicion)
 class Jirafa(Animal):
     def __init__(self, vida, energia, dieta, especies,sexo):
         super().__init__(vida, energia, dieta, especies)
@@ -180,36 +181,38 @@ class Jirafa(Animal):
         self.movimiento = True
         self.sexo = sexo
         self.vivo = True
+        self.descomposicion = 255
 
     def update(self):
-        if self.movimiento and self.vivo: 
-            self.rango -= 1
-            if self.rango < 0:
-                self.rango = ra.randint(0, 100)
-                self.direction = ra.choice(["up", "down", "left", "right"])
-                # Calcular la nueva posición de destino dentro de la cuadrícula
-                grid_x = self.rect.x // 40 * 40
-                grid_y = self.rect.y // 40 * 40
-
-                if self.direction == "up" and self.rect.y > 0:
-                    self.target_y = max(0, grid_y - 40)
-                elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
-                    self.target_y = min(760 - self.rect.height, grid_y + 40)
-                elif self.direction == "left" and self.rect.x > 0:
-                    self.target_x = max(0, grid_x - 40)
-                elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
-                    self.target_x = min(920 - self.rect.width, grid_x + 40)
-
-
-            # Mover hacia la posición de destino (suaviza el movimiento)
-            if self.rect.x < self.target_x:
-                self.rect.x += min(self.speed, self.target_x - self.rect.x)
-            elif self.rect.x > self.target_x:
-                self.rect.x -= min(self.speed, self.rect.x - self.target_x)
-            elif self.rect.y < self.target_y:
-                self.rect.y += min(self.speed, self.target_y - self.rect.y)
-            elif self.rect.y > self.target_y:
-                self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        if self.vivo:
+            if self.movimiento: 
+                self.rango -= 1
+                if self.rango < 0:
+                    self.rango = ra.randint(0, 100)
+                    self.direction = ra.choice(["up", "down", "left", "right"])
+                    # Calcular la nueva posición de destino dentro de la cuadrícula
+                    grid_x = self.rect.x // 40 * 40
+                    grid_y = self.rect.y // 40 * 40
+                    if self.direction == "up" and self.rect.y > 0:
+                        self.target_y = max(0, grid_y - 40)
+                    elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                        self.target_y = min(760 - self.rect.height, grid_y + 40)
+                    elif self.direction == "left" and self.rect.x > 0:
+                        self.target_x = max(0, grid_x - 40)
+                    elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                        self.target_x = min(920 - self.rect.width, grid_x + 40)
+                # Mover hacia la posición de destino (suaviza el movimiento)
+                if self.rect.x < self.target_x:
+                    self.rect.x += min(self.speed, self.target_x - self.rect.x)
+                elif self.rect.x > self.target_x:
+                    self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+                elif self.rect.y < self.target_y:
+                    self.rect.y += min(self.speed, self.target_y - self.rect.y)
+                elif self.rect.y > self.target_y:
+                    self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        else:             
+            self.descomposicion = max(0 , self.descomposicion - 1)
+            self.image.set_alpha(self.descomposicion)
 
 class Elefante(Animal):
     def __init__(self, vida, energia, dieta, especies,sexo):
@@ -227,36 +230,38 @@ class Elefante(Animal):
         self.movimiento = True
         self.sexo = sexo
         self.vivo = True
+        self.descomposicion = 255
 
     def update(self):
-        if self.movimiento and self.vivo: 
-            self.rango -= 1
-            if self.rango < 0:
-                self.rango = ra.randint(0, 100)
-                self.direction = ra.choice(["up", "down", "left", "right"])
-                # Calcular la nueva posición de destino dentro de la cuadrícula
-                grid_x = self.rect.x // 40 * 40
-                grid_y = self.rect.y // 40 * 40
-
-                if self.direction == "up" and self.rect.y > 0:
-                    self.target_y = max(0, grid_y - 40)
-                elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
-                    self.target_y = min(760 - self.rect.height, grid_y + 40)
-                elif self.direction == "left" and self.rect.x > 0:
-                    self.target_x = max(0, grid_x - 40)
-                elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
-                    self.target_x = min(920 - self.rect.width, grid_x + 40)
-
-
-            # Mover hacia la posición de destino (suaviza el movimiento)
-            if self.rect.x < self.target_x:
-                self.rect.x += min(self.speed, self.target_x - self.rect.x)
-            elif self.rect.x > self.target_x:
-                self.rect.x -= min(self.speed, self.rect.x - self.target_x)
-            elif self.rect.y < self.target_y:
-                self.rect.y += min(self.speed, self.target_y - self.rect.y)
-            elif self.rect.y > self.target_y:
-                self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        if self.vivo:
+            if self.movimiento: 
+                self.rango -= 1
+                if self.rango < 0:
+                    self.rango = ra.randint(0, 100)
+                    self.direction = ra.choice(["up", "down", "left", "right"])
+                    # Calcular la nueva posición de destino dentro de la cuadrícula
+                    grid_x = self.rect.x // 40 * 40
+                    grid_y = self.rect.y // 40 * 40
+                    if self.direction == "up" and self.rect.y > 0:
+                        self.target_y = max(0, grid_y - 40)
+                    elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                        self.target_y = min(760 - self.rect.height, grid_y + 40)
+                    elif self.direction == "left" and self.rect.x > 0:
+                        self.target_x = max(0, grid_x - 40)
+                    elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                        self.target_x = min(920 - self.rect.width, grid_x + 40)
+                # Mover hacia la posición de destino (suaviza el movimiento)
+                if self.rect.x < self.target_x:
+                    self.rect.x += min(self.speed, self.target_x - self.rect.x)
+                elif self.rect.x > self.target_x:
+                    self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+                elif self.rect.y < self.target_y:
+                    self.rect.y += min(self.speed, self.target_y - self.rect.y)
+                elif self.rect.y > self.target_y:
+                    self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        else:             
+            self.descomposicion = max(0 , self.descomposicion - 1)
+            self.image.set_alpha(self.descomposicion)
 
 class Jabali(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
@@ -274,36 +279,38 @@ class Jabali(Animal):
         self.movimiento = True
         self.sexo = sexo
         self.vivo = True
+        self.descomposicion = 255
 
     def update(self):
-        if self.movimiento and self.vivo: 
-            self.rango -= 1
-            if self.rango < 0:
-                self.rango = ra.randint(0, 100)
-                self.direction = ra.choice(["up", "down", "left", "right"])
-                # Calcular la nueva posición de destino dentro de la cuadrícula
-                grid_x = self.rect.x // 40 * 40
-                grid_y = self.rect.y // 40 * 40
-
-                if self.direction == "up" and self.rect.y > 0:
-                    self.target_y = max(0, grid_y - 40)
-                elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
-                    self.target_y = min(760 - self.rect.height, grid_y + 40)
-                elif self.direction == "left" and self.rect.x > 0:
-                    self.target_x = max(0, grid_x - 40)
-                elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
-                    self.target_x = min(920 - self.rect.width, grid_x + 40)
-
-
-            # Mover hacia la posición de destino (suaviza el movimiento)
-            if self.rect.x < self.target_x:
-                self.rect.x += min(self.speed, self.target_x - self.rect.x)
-            elif self.rect.x > self.target_x:
-                self.rect.x -= min(self.speed, self.rect.x - self.target_x)
-            elif self.rect.y < self.target_y:
-                self.rect.y += min(self.speed, self.target_y - self.rect.y)
-            elif self.rect.y > self.target_y:
-                self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        if self.vivo:
+            if self.movimiento: 
+                self.rango -= 1
+                if self.rango < 0:
+                    self.rango = ra.randint(0, 100)
+                    self.direction = ra.choice(["up", "down", "left", "right"])
+                    # Calcular la nueva posición de destino dentro de la cuadrícula
+                    grid_x = self.rect.x // 40 * 40
+                    grid_y = self.rect.y // 40 * 40
+                    if self.direction == "up" and self.rect.y > 0:
+                        self.target_y = max(0, grid_y - 40)
+                    elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                        self.target_y = min(760 - self.rect.height, grid_y + 40)
+                    elif self.direction == "left" and self.rect.x > 0:
+                        self.target_x = max(0, grid_x - 40)
+                    elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                        self.target_x = min(920 - self.rect.width, grid_x + 40)
+                # Mover hacia la posición de destino (suaviza el movimiento)
+                if self.rect.x < self.target_x:
+                    self.rect.x += min(self.speed, self.target_x - self.rect.x)
+                elif self.rect.x > self.target_x:
+                    self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+                elif self.rect.y < self.target_y:
+                    self.rect.y += min(self.speed, self.target_y - self.rect.y)
+                elif self.rect.y > self.target_y:
+                    self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        else:             
+            self.descomposicion = max(0 , self.descomposicion - 1)
+            self.image.set_alpha(self.descomposicion)
 
 class Leopardo(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
@@ -321,37 +328,38 @@ class Leopardo(Animal):
         self.movimiento = True
         self.sexo = sexo
         self.vivo = True
+        self.descomposicion = 255
 
     def update(self):
-        if self.movimiento and self.vivo: 
-            self.rango -= 1
-            if self.rango < 0:
-                self.rango = ra.randint(0, 100)
-                self.direction = ra.choice(["up", "down", "left", "right"])
-                # Calcular la nueva posición de destino dentro de la cuadrícula
-                grid_x = self.rect.x // 40 * 40
-                grid_y = self.rect.y // 40 * 40
-
-                if self.direction == "up" and self.rect.y > 0:
-                    self.target_y = max(0, grid_y - 40)
-                elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
-                    self.target_y = min(760 - self.rect.height, grid_y + 40)
-                elif self.direction == "left" and self.rect.x > 0:
-                    self.target_x = max(0, grid_x - 40)
-                elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
-                    self.target_x = min(920 - self.rect.width, grid_x + 40)
-
-
-            # Mover hacia la posición de destino (suaviza el movimiento)
-            if self.rect.x < self.target_x:
-                self.rect.x += min(self.speed, self.target_x - self.rect.x)
-            elif self.rect.x > self.target_x:
-                self.rect.x -= min(self.speed, self.rect.x - self.target_x)
-            elif self.rect.y < self.target_y:
-                self.rect.y += min(self.speed, self.target_y - self.rect.y)
-            elif self.rect.y > self.target_y:
-                self.rect.y -= min(self.speed, self.rect.y - self.target_y)
-
+        if self.vivo:
+            if self.movimiento: 
+                self.rango -= 1
+                if self.rango < 0:
+                    self.rango = ra.randint(0, 100)
+                    self.direction = ra.choice(["up", "down", "left", "right"])
+                    # Calcular la nueva posición de destino dentro de la cuadrícula
+                    grid_x = self.rect.x // 40 * 40
+                    grid_y = self.rect.y // 40 * 40
+                    if self.direction == "up" and self.rect.y > 0:
+                        self.target_y = max(0, grid_y - 40)
+                    elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                        self.target_y = min(760 - self.rect.height, grid_y + 40)
+                    elif self.direction == "left" and self.rect.x > 0:
+                        self.target_x = max(0, grid_x - 40)
+                    elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                        self.target_x = min(920 - self.rect.width, grid_x + 40)
+                # Mover hacia la posición de destino (suaviza el movimiento)
+                if self.rect.x < self.target_x:
+                    self.rect.x += min(self.speed, self.target_x - self.rect.x)
+                elif self.rect.x > self.target_x:
+                    self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+                elif self.rect.y < self.target_y:
+                    self.rect.y += min(self.speed, self.target_y - self.rect.y)
+                elif self.rect.y > self.target_y:
+                    self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        else:             
+            self.descomposicion = max(0 , self.descomposicion - 1)
+            self.image.set_alpha(self.descomposicion)
 
 class Suricata(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
@@ -369,37 +377,38 @@ class Suricata(Animal):
         self.movimiento = True
         self.sexo = sexo
         self.vivo = True
+        self.descomposicion = 255
 
     def update(self):
-        if self.movimiento and self.vivo: 
-            self.rango -= 1
-            if self.rango < 0:
-                self.rango = ra.randint(0, 100)
-                self.direction = ra.choice(["up", "down", "left", "right"])
-                # Calcular la nueva posición de destino dentro de la cuadrícula
-                grid_x = self.rect.x // 40 * 40
-                grid_y = self.rect.y // 40 * 40
-
-                if self.direction == "up" and self.rect.y > 0:
-                    self.target_y = max(0, grid_y - 40)
-                elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
-                    self.target_y = min(760 - self.rect.height, grid_y + 40)
-                elif self.direction == "left" and self.rect.x > 0:
-                    self.target_x = max(0, grid_x - 40)
-                elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
-                    self.target_x = min(920 - self.rect.width, grid_x + 40)
-
-
-            # Mover hacia la posición de destino (suaviza el movimiento)
-            if self.rect.x < self.target_x:
-                self.rect.x += min(self.speed, self.target_x - self.rect.x)
-            elif self.rect.x > self.target_x:
-                self.rect.x -= min(self.speed, self.rect.x - self.target_x)
-            elif self.rect.y < self.target_y:
-                self.rect.y += min(self.speed, self.target_y - self.rect.y)
-            elif self.rect.y > self.target_y:
-                self.rect.y -= min(self.speed, self.rect.y - self.target_y)
-
+        if self.vivo:
+            if self.movimiento: 
+                self.rango -= 1
+                if self.rango < 0:
+                    self.rango = ra.randint(0, 100)
+                    self.direction = ra.choice(["up", "down", "left", "right"])
+                    # Calcular la nueva posición de destino dentro de la cuadrícula
+                    grid_x = self.rect.x // 40 * 40
+                    grid_y = self.rect.y // 40 * 40
+                    if self.direction == "up" and self.rect.y > 0:
+                        self.target_y = max(0, grid_y - 40)
+                    elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                        self.target_y = min(760 - self.rect.height, grid_y + 40)
+                    elif self.direction == "left" and self.rect.x > 0:
+                        self.target_x = max(0, grid_x - 40)
+                    elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                        self.target_x = min(920 - self.rect.width, grid_x + 40)
+                # Mover hacia la posición de destino (suaviza el movimiento)
+                if self.rect.x < self.target_x:
+                    self.rect.x += min(self.speed, self.target_x - self.rect.x)
+                elif self.rect.x > self.target_x:
+                    self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+                elif self.rect.y < self.target_y:
+                    self.rect.y += min(self.speed, self.target_y - self.rect.y)
+                elif self.rect.y > self.target_y:
+                    self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        else:             
+            self.descomposicion = max(0 , self.descomposicion - 1)
+            self.image.set_alpha(self.descomposicion)
 
 class Insecto(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
@@ -417,33 +426,35 @@ class Insecto(Animal):
         self.movimiento = True
         self.vivo = True
         self.sexo = sexo
+        self.descomposicion = 255
 
     def update(self):
-        if self.movimiento and self.vivo: 
-            self.rango -= 1
-            if self.rango < 0:
-                self.rango = ra.randint(0, 100)
-                self.direction = ra.choice(["up", "down", "left", "right"])
-                # Calcular la nueva posición de destino dentro de la cuadrícula
-                grid_x = self.rect.x // 40 * 40
-                grid_y = self.rect.y // 40 * 40
-
-                if self.direction == "up" and self.rect.y > 0:
-                    self.target_y = max(0, grid_y - 40)
-                elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
-                    self.target_y = min(760 - self.rect.height, grid_y + 40)
-                elif self.direction == "left" and self.rect.x > 0:
-                    self.target_x = max(0, grid_x - 40)
-                elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
-                    self.target_x = min(920 - self.rect.width, grid_x + 40)
-
-
-            # Mover hacia la posición de destino (suaviza el movimiento)
-            if self.rect.x < self.target_x:
-                self.rect.x += min(self.speed, self.target_x - self.rect.x)
-            elif self.rect.x > self.target_x:
-                self.rect.x -= min(self.speed, self.rect.x - self.target_x)
-            elif self.rect.y < self.target_y:
-                self.rect.y += min(self.speed, self.target_y - self.rect.y)
-            elif self.rect.y > self.target_y:
-                self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        if self.vivo:
+            if self.movimiento: 
+                self.rango -= 1
+                if self.rango < 0:
+                    self.rango = ra.randint(0, 100)
+                    self.direction = ra.choice(["up", "down", "left", "right"])
+                    # Calcular la nueva posición de destino dentro de la cuadrícula
+                    grid_x = self.rect.x // 40 * 40
+                    grid_y = self.rect.y // 40 * 40
+                    if self.direction == "up" and self.rect.y > 0:
+                        self.target_y = max(0, grid_y - 40)
+                    elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
+                        self.target_y = min(760 - self.rect.height, grid_y + 40)
+                    elif self.direction == "left" and self.rect.x > 0:
+                        self.target_x = max(0, grid_x - 40)
+                    elif self.direction == "right" and self.rect.x < 920 - self.rect.width:
+                        self.target_x = min(920 - self.rect.width, grid_x + 40)
+                # Mover hacia la posición de destino (suaviza el movimiento)
+                if self.rect.x < self.target_x:
+                    self.rect.x += min(self.speed, self.target_x - self.rect.x)
+                elif self.rect.x > self.target_x:
+                    self.rect.x -= min(self.speed, self.rect.x - self.target_x)
+                elif self.rect.y < self.target_y:
+                    self.rect.y += min(self.speed, self.target_y - self.rect.y)
+                elif self.rect.y > self.target_y:
+                    self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+        else:             
+            self.descomposicion = max(0 , self.descomposicion - 1)
+            self.image.set_alpha(self.descomposicion)

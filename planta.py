@@ -1,3 +1,4 @@
+from typing import Any
 import pygame
 from pygame.sprite import Sprite
 import random as ra
@@ -16,7 +17,7 @@ class Planta(Organismo):
 
 
 class Planta1(Planta):
-    def __init__(self, posicionx, posiciony, vida,energia,  tipo, dieta):
+    def __init__(self, posicionx, posiciony, vida, energia, tipo, dieta):
         super().__init__(posicionx, posiciony, vida, energia)
         self.image = pygame.image.load("Planta/d2.png").convert_alpha()
         self.rect = self.image.get_rect()
