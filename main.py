@@ -51,7 +51,13 @@ pygame.display.set_caption('Proyecto Final (Simulador Sabana)')
 icono = pygame.image.load('Logo.ico')
 pygame.display.set_icon(icono)
 
-#Clases 
+# Cuidado
+
+image_path = "Ambiente/ciro.png"
+image = pygame.image.load(image_path)
+image_rect = image.get_rect()
+
+# clase para crear el panel
 class Panel:
     def __init__(self):
         self.ubicacionx = 800 + 200
@@ -65,6 +71,8 @@ class Panel:
         a = pygame.Rect(self.ubicacionx, self.ubicaciony, self.ancho, self.a)
         screen.fill((52,52,52), a)
 
+# ciclos para lluvia y tormenta y la frecuencia con la que esta ocurre
+
 ciclos = 0
 ciclos2 = 0
 frecuencia = 500
@@ -77,14 +85,10 @@ for i in range(50):
     nube = Ambiente.Tormenta()
     nubes.add(nube)
 
-# trueno
-
-trueno = Group()
-
 #musica
-#pygame.mixer.music.load('music.mp3') # Importa musica 
-#pygame.mixer.music.play(1)
-#pygame.mixer.music.set_volume(0.05) # nivel de volumen
+pygame.mixer.music.load('music.mp3') # Importa musica 
+pygame.mixer.music.play(1)
+pygame.mixer.music.set_volume(0.05) # nivel de volumen
 
 
 
@@ -96,9 +100,9 @@ for i in range(0, 4):
     lista.append(Leopardo(100, 40, "Carnivoro", ra.choice(["Mamifero", "Herviboro"]), ra.choice(["macho","hembra"])))
     lista.append(Cebra(100, 20, "Herviboro", "Fotosintesis", ra.choice(["macho","hembra"])))
     lista.append(Jirafa(100, 10, "Herviboro", "Fotosintesis", ra.choice(["macho","hembra"])))
+    lista.append(Insecto(100, 25, "Herviboro", ra.choice(["Mamifero", "Herviboro", "Insectivoro", "Carnivoro"]), ra.choice(["macho","hembra"])))
     lista.append(Elefante(100, 40, "Herviboro", "Fotosintesis", ra.choice(["macho","hembra"])))
     lista.append(Suricata(100, 40, "Insectivoro", ra.choice(["Tulipan", "Margaritas", "Insecto"]), ra.choice(["macho","hembra"])))
-    lista.append(Insecto(100, 25, "Descomponedor", ra.choice(["Mamifero", "Herviboro", "Insectivoro", "Carnivoro"]), ra.choice(["macho","hembra"])))
  
 # Agrega plantas alrededor del mapa
 listaplantas = []
@@ -270,17 +274,7 @@ while True:
                 if isinstance(colision, Animal) and hasattr(colision, 'vivo') and colision.vivo and isinstance(colision, Animal) and colision != sprite:
                     if (sprite.rect.x // 40 == colision.rect.x // 40 and sprite.rect.y // 40 == colision.rect.y // 40):
                         if isinstance(colision, Animal) and isinstance(sprite, Animal):
-                            if colision.dieta == "Carnivoro" and sprite.dieta == ra.choice(["Herviboro", "Insectivoro", "Omnivoro"]):
-                                colision.vida += 100
-                                sprite.vivo = False
-                                muertes += 1
-                                vivos -= 1
-                            elif colision.dieta == "Insectivoro" and sprite.dieta == "Insecto":
-                                colision.vida += 100
-                                sprite.vivo = False
-                                muertes += 1
-                                vivos -= 1
-                            elif colision.dieta == "Omnivoro" and sprite.dieta == ra.choice(["Carnivoro", "Herviboro", "Insectivoro"]):
+                            if colision.dieta == "Insectivoro" and sprite.dieta == "Insecto":
                                 colision.vida += 100
                                 sprite.vivo = False
                                 muertes += 1
@@ -298,12 +292,28 @@ while True:
                                 plantas_vivas -= 1
     for sprite in all_sprites:
         if isinstance(sprite, Animal) and hasattr(sprite, 'vivo') and sprite.vivo:
-            sprite.vida -= 0.1  
+            sprite.vida -= 0.01  
             if sprite.vida <= 0:
                 sprite.vida = 0
                 sprite.vivo = False
                 muertes += 1
                 vivos -= 1
+            if sprite.vida < 80:
+                colisiones = pygame.sprite.spritecollide(sprite, all_sprites, False)
+            for colision in colisiones:
+                if isinstance(colision, Animal) and hasattr(colision, 'vivo') and colision.vivo and isinstance(colision, Animal) and colision != sprite:
+                    if (sprite.rect.x // 40 == colision.rect.x // 40 and sprite.rect.y // 40 == colision.rect.y // 40):
+                        if isinstance(colision, Animal) and isinstance(sprite, Animal):
+                            if colision.dieta == "Carnivoro" and sprite.dieta == ra.choice(["Herviboro", "Insectivoro", "Omnivoro"]):
+                                colision.vida += 100
+                                sprite.vivo = False
+                                muertes += 1
+                                vivos -= 1
+                            elif colision.dieta == "Omnivoro" and sprite.dieta == ra.choice(["Carnivoro", "Herviboro", "Insectivoro"]):
+                                colision.vida += 100
+                                sprite.vivo = False
+                                muertes += 1
+                                vivos -= 1
 
     for sprite in all_sprites:
         if isinstance(sprite, Animal) and hasattr(sprite, 'vivo'):
@@ -318,6 +328,7 @@ while True:
     all_sprites.update()
 
     dibujado.pintar()
+    screen.blit(image, (1000, 500))
 
     dia = dibujado.myFont.render(f'Dias: {dias:2d}', True, (220, 220, 220))
     screen.blit(dia, (1020, 20))
@@ -333,7 +344,11 @@ while True:
     screen.blit(tiempo, (1020, 340))
     tiempo = dibujado.myFont2.render(f'Flores Muertas : {plantas_muertas:01d}', True, (220, 220, 220))
     screen.blit(tiempo, (1020, 360))
+    tiempo = dibujado.myFont2.render('Pygame is', True, (0, 0, 0))
+    screen.blit(tiempo, (1024, 530))
+    tiempo = dibujado.myFont2.render('Amazing', True, (0, 0, 0))
+    screen.blit(tiempo, (1026, 550))
 
     pygame.display.flip()
-    clock.tick(40)
+    clock.tick(60)
     
