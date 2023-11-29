@@ -51,7 +51,11 @@ Una vez ahi, debemos seleccionar nuestro Sistema Operativo, En nuestro caso fue 
 
   ![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/7bdb5c64-71e8-4938-80c3-63c1f59f37ee)
 
-- Y bueno pues, Dependiendo de el sistema operativo que eligieron, Deben pinchar en el "Installer", dependiendom si es 64 o 32 bits, En nuestro caso pusimos el Windows Installer 64 
+- Y bueno pues, Dependiendo de el sistema operativo que eligieron, Deben pinchar en el "Installer", dependiendom si es 64 o 32 bits, En nuestro caso pusimos el Windows Installer 64
+
+
+-Luego ahora si podemos descargar el proyecto (Ojo, primero hay que instalar el pygame para correrlo pero eso ya lo cubriremos mas abajo)
+Para eso seleccionan
 
 
 
