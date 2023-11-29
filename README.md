@@ -62,6 +62,21 @@ Para eso seleccionan "Code" y luego "Download ZIP"
 y lo extraen donde ustedes Quieran
 
 
+- Luego, abren el Visual Studio Code y presionan donde dice "File" o "Archivo" y luego en "Abrir Carpeta" o "Open Folder" y buscan la carpeta del proyecto y la seleccionan
+
+  ![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/37a5a650-c40b-4cbd-9042-7cb856753743)
+
+
+
+  una vez esten en la carpeta, Presionan donde dice "Terminal" y luego "New Terminal"
+
+    ![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/f80c1c53-6e6b-4d13-ba60-198c092dc584)
+
+  Luego Escriben "Pip3 install pygame" y le dan en enter, esperan a que termine la instalacion
+  
+
+
+
 
 
 
