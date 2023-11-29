@@ -213,6 +213,9 @@ omniboros_muertos = 0
 insectos_muertos = 0
 insectivoros_muertos = 0
 
+
+
+
 # Bucle del Programa
 while True:
     for event in pygame.event.get():
@@ -229,6 +232,11 @@ while True:
     if ciclos >= 1440:
         hora += 1
         ciclos = 0
+        for animal in lista:  # Itera sobre la lista de animales
+            animal.vida -= 3
+            if animal.vida <= 0:
+                animal.movimiento = False
+                animal.image = pygame.transform.flip(animal.image, False, True)
 
     # para que cada ciclo sea de 1 hora
 
@@ -333,15 +341,21 @@ while True:
                     sprite.kill()
                     plantas_muertas += 1 
 
+    for animal in lista:
+        animal.update()
+        nuevas_criaturas = animal.colision_y_reproduccion(lista)
+        if nuevas_criaturas is not None:
+            lista.append(nuevas_criaturas)
 
 
 
-                    
+
+
     all_sprites.draw(screen)
     all_sprites.update()
 
 
-
+    
     dibujado.pintar()
     dibujado.botones()
     dibujado.textos()

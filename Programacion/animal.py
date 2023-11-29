@@ -18,10 +18,11 @@ class Animal(Organismo):
         self.rect.y = ra.randint(0, 18) * 40 # Centrar en una casilla
         self.target_x = self.rect.x  # Destino x en casilla
         self.target_y = self.rect.y  # Destino y en casilla
-        self.speed = 1  # Velocidad baja para moverse de casilla en casilla
+        self.speed = 0.6  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 100)
         self.direction = None  # Dirección inicial
         self.movimiento = True
+        self.cantidad_animales_creados = 0
     
     def update(self):
         if self.movimiento: 
@@ -60,6 +61,21 @@ class Animal(Organismo):
         
     def descomposicion(self):
         pass
+    def colision_y_reproduccion(self, lista):
+        nuevas_criaturas = []  # Lista temporal para almacenar las nuevas criaturas
+        for sprite in lista:
+            colisiones = pygame.sprite.spritecollide(sprite, lista, False)
+            for colision in colisiones:
+                if isinstance(colision, Animal) and isinstance(sprite, Animal) and colision != sprite and colision.sexo != sprite.sexo and type(colision) == type(sprite):
+                    nueva_vida = (colision.vida + sprite.vida) // 2
+                    nueva_energia = (colision.energia + sprite.energia) // 2
+                    nueva_criatura = type(colision)(nueva_vida, nueva_energia, colision.dieta, colision.especies, ra.choice(["hembra", "macho"]))
+                    nueva_criatura.rect.x = (colision.rect.x + sprite.rect.x) // 2
+                    nueva_criatura.rect.y = (colision.rect.y + sprite.rect.y) // 2
+
+                    print("Nuevo animal creado:", nueva_criatura)
+                    nuevas_criaturas.append(nueva_criatura)  # Agregar a la lista temporal
+                    return nuevas_criaturas if nuevas_criaturas else []
 
 
 class Tigre(Animal):
@@ -71,7 +87,9 @@ class Tigre(Animal):
 
     def update(self):
         super().update()
-
+    
+    def colision_y_reproduccion(self, lista):
+        super().colision_y_reproduccion(lista)
 class Cebra(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies, sexo)
@@ -81,6 +99,10 @@ class Cebra(Animal):
 
     def update(self):
         super().update()
+    
+    def colision_y_reproduccion(self, lista):
+        super().colision_y_reproduccion(lista)
+
 class Cerdo(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies, sexo)
@@ -90,6 +112,10 @@ class Cerdo(Animal):
 
     def update(self):
         super().update()
+    
+    def colision_y_reproduccion(self, lista):
+        super().colision_y_reproduccion(lista)
+
 class Jirafa(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies, sexo)
@@ -99,6 +125,10 @@ class Jirafa(Animal):
 
     def update(self):
         super().update()
+
+
+    def colision_y_reproduccion(self, lista):
+        super().colision_y_reproduccion(lista)
 class Elefante(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies, sexo)
@@ -110,6 +140,8 @@ class Elefante(Animal):
         super().update()
         
 
+    def colision_y_reproduccion(self, lista):
+        super().colision_y_reproduccion(lista)
 class Jabali(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies, sexo)
@@ -120,6 +152,8 @@ class Jabali(Animal):
     def update(self):
         super().update()
 
+
+
 class Leopardo(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies, sexo)
@@ -129,7 +163,8 @@ class Leopardo(Animal):
     def update(self):
         super().update()
 
-
+    def colision_y_reproduccion(self, lista):
+        super().colision_y_reproduccion(lista)
 class Suricata(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies, sexo)
@@ -138,7 +173,10 @@ class Suricata(Animal):
 
     def update(self):
         super().update()
+    
 
+    def colision_y_reproduccion(self, lista):
+        super().colision_y_reproduccion(lista)
 class Insecto(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies, sexo)
@@ -147,3 +185,6 @@ class Insecto(Animal):
 
     def update(self):
         super().update()
+
+    def colision_y_reproduccion(self, lista):
+        super().colision_y_reproduccion(lista)
