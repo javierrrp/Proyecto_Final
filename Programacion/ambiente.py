@@ -24,7 +24,7 @@ fondo_rect6 = fondo6.get_rect()
 class Ambiente:
     def __init__(self, counter):
         self.counter = 0
-    class lluvia:
+    class lluvia(Sprite):
         #Constructor
         def __init__(self):
             #posicionx 
@@ -62,13 +62,32 @@ class Ambiente:
                 self.image = pygame.transform.scale(pygame.image.load("Ambiente/nube.png").convert(), (100, 100))
                 self.rect = self.image.get_rect()
                 self.radius = 50
+
             self.image.set_colorkey((0,0,0))
 
-            self.rect.x = ra.randrange(-1000, 0)
+            self.rect.x = ra.randrange(-1000, -200)
             self.rect.y = ra.randrange(-30, 100)
             self.velocidad_x = ra.randrange(1 , 5) # Velocidad horizontal aleatoria
+            self.transparencia = 0
 
         def update(self):
             self.rect.x += self.velocidad_x
             if self.rect.right > nRes[2] + 100:
-                self.kill()
+                self.rect.x = ra.randrange(-1000, -200)
+                self.rect.y = ra.randrange(-30, 100)
+                self.velocidad_x = ra.randrange(1 , 5) # Velocidad horizontal aleatoria
+
+            self.transparencia = min(255, self.transparencia + 1)
+            self.image.set_alpha(self.transparencia)
+            
+    class Trueno(Sprite):
+        def __init__(self):
+            super().__init__()
+            self.velocidad_x = ra.randrange(1, 5)
+            self.image = pygame.transform.scale(pygame.image.load("Ambiente/trueno.png").convert(), (150, 150))
+            self.rect = self.image.get_rect()
+            self.radius = 75
+            self.image.set_colorkey((0, 0, 0))
+            self.rect.x = ra.randrange(0, 960)
+            self.rect.y = ra.randrange(0, 760)
+
