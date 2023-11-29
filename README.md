@@ -61,4 +61,3 @@ Una vez ahi, debemos seleccionar nuestro Sistema Operativo, En nuestro caso fue 
 
 
 
-
