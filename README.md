@@ -18,5 +18,15 @@ Ademas, hay tambien un "Panel de control" que permite al usuario la Inyeccion de
 
 
 
+# Recursos Usados
+
+-Se utilizo el Lenguaje de programacion "Python" para poder hacer posible esta propuesta
+
+
+![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/7c609436-8ad1-4f55-985d-9760378d6d24)
+
+
+
+
 
 
