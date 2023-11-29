@@ -55,7 +55,12 @@ Una vez ahi, debemos seleccionar nuestro Sistema Operativo, En nuestro caso fue 
 
 
 -Luego ahora si podemos descargar el proyecto (Ojo, primero hay que instalar el pygame para correrlo pero eso ya lo cubriremos mas abajo)
-Para eso seleccionan
+Para eso seleccionan "Code" y luego "Download ZIP"
+
+![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/458468a5-3682-4ff5-a80f-ef568141fd5c)
+
+y lo extraen donde ustedes Quieran
+
 
 
 
