@@ -248,29 +248,45 @@ while True:
 
 
     for sprite in all_sprites:
-        colisiones = pygame.sprite.spritecollide(sprite, all_sprites, False)
-        for colision in colisiones:
-            if isinstance(colision, Animal) and isinstance(sprite, Animal):
-                if colision.dieta == "Carnivoro" and sprite.dieta == ra.choice(["Herviboro", "Insectivoro", "Omnivoro"]):
-                    sprite.kill()
-                    herviboros_muertos +=1
-                    insectivoros_muertos += 1
-                    omniboros_muertos +=1
-                elif colision.dieta == "Insectivoro" and sprite.dieta == "Insecto":
-                    sprite.kill()
-                    insectos_muertos +=1
-                elif colision.dieta == "Omnivoro" and sprite.dieta == ra.choice(["Carnivoro", "Herviboro", "Insectivoro"]):
-                    sprite.kill()
-                    carnivoros_muertos +=1
-                    herviboros_muertos +=1
-            elif isinstance(colision, Animal) and isinstance(sprite, Planta):
-                if colision.dieta == "Herviboro" and sprite.dieta == "Fotosintesis":
-                    sprite.kill()
-                    plantas_muertas += 1 
-                if colision.dieta == "Omnivoro" and sprite.dieta == "Fotosintesis":
-                    sprite.kill()
-                    plantas_muertas += 1 
+        if isinstance(sprite, Animal) and hasattr(sprite, 'vivo') and sprite.vivo:
+            sprite.vida -= 1 * 0.01    
+            colisiones = pygame.sprite.spritecollide(sprite, all_sprites, False)
+            for colision in colisiones:
+                if isinstance(colision, Animal) and hasattr(colision, 'vivo') and colision.vivo:
+                    if isinstance(colision, Animal) and isinstance(sprite, Animal):
+                        if colision.dieta == "Carnivoro" and sprite.dieta == ra.choice(["Herviboro", "Insectivoro", "Omnivoro"]):
+                            sprite.vida += 20
+                            sprite.vivo = False
+                            sprite.color = (255, 0, 0)
+                            herviboros_muertos +=1
+                            insectivoros_muertos += 1
+                            omniboros_muertos +=1
+                        elif colision.dieta == "Insectivoro" and sprite.dieta == "Insecto":
+                            sprite.vida += 20
+                            sprite.vivo = False
+                            insectos_muertos +=1
+                        elif colision.dieta == "Omnivoro" and sprite.dieta == ra.choice(["Carnivoro", "Herviboro", "Insectivoro"]):
+                            sprite.vida += 20
+                            sprite.vivo = False
+                            carnivoros_muertos +=1
+                            herviboros_muertos +=1
+                    elif isinstance(colision, Animal) and isinstance(sprite, Planta):
+                        if colision.dieta == "Herviboro" and sprite.dieta == "Fotosintesis":
+                            sprite.vida += 20
+                            sprite.kill()
+                            plantas_muertas += 1 
+                        if colision.dieta == "Omnivoro" and sprite.dieta == "Fotosintesis":
+                            sprite.vida += 20
+                            sprite.kill()
+                            plantas_muertas += 1
 
+        for sprite in all_sprites:
+            if isinstance(sprite, Animal) and hasattr(sprite, 'vivo') and sprite.vivo:
+                if sprite.rect.collidepoint(pygame.mouse.get_pos()):
+                    vida_porcentaje = (sprite.vida / 100.0) * 100
+                    barrita = min(vida_porcentaje, 40)
+                    pygame.draw.rect(screen, (255, 0, 0), (sprite.rect.x, sprite.rect.y - 10, 40, 5))
+                    pygame.draw.rect(screen, (0, 255, 0), (sprite.rect.x, sprite.rect.y - 10, barrita, 5))
     all_sprites.draw(screen)
     all_sprites.update()
 

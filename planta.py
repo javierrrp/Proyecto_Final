@@ -24,6 +24,7 @@ class Planta1(Planta):
         self.rect.y = posiciony
         self.tipo = tipo
         self.dieta = dieta
+        self.vivo = True
 
 class Planta2(Planta):
     def __init__(self, posicionx, posiciony, vida, energia , tipo, dieta):
@@ -34,3 +35,4 @@ class Planta2(Planta):
         self.rect.y = posiciony
         self.tipo = tipo
         self.dieta = dieta
+        self.vivo = True

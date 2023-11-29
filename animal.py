@@ -32,9 +32,10 @@ class Tigre(Animal):
         self.direction = None  # Dirección inicial
         self.movimiento = True
         self.sexo = sexo
+        self.vivo = True
 
     def update(self):
-        if self.movimiento: 
+        if self.movimiento and self.vivo: 
             self.rango -= 1
             if self.rango < 0:
                 self.rango = ra.randint(0, 100)
@@ -42,7 +43,7 @@ class Tigre(Animal):
                 # Calcular la nueva posición de destino dentro de la cuadrícula
                 grid_x = self.rect.x // 40 * 40
                 grid_y = self.rect.y // 40 * 40
-                
+
                 if self.direction == "up" and self.rect.y > 0:
                     self.target_y = max(0, grid_y - 40)
                 elif self.direction == "down" and self.rect.y < 760 - self.rect.height:
@@ -78,9 +79,10 @@ class Cebra(Animal):
         self.direction = None  # Dirección inicial
         self.movimiento = True
         self.sexo = sexo
+        self.vivo = True
 
     def update(self):
-        if self.movimiento: 
+        if self.vivo and self.movimiento: 
             self.rango -= 1
             if self.rango < 0:
                 self.rango = ra.randint(0, 500)
@@ -120,9 +122,17 @@ class Cerdo(Animal):
         self.direction = None  # Dirección inicial
         self.movimiento = True
         self.sexo = sexo
+        self.vivo = True
+
+    def reproducirse(self, cerdo2):
+        if self.sexo != cerdo2.sexo:
+            hijo = Cerdo(100, 25, "Omnivoro", ra.choice(["Mamifero", "Tulipan", "Herviboro", "Margaritas"]), ra.choice(["macho", "hembra"]))
+            return hijo
+        else:
+            return None
 
     def update(self):
-        if self.movimiento: 
+        if self.movimiento and self.vivo: 
             self.rango -= 1
             if self.rango < 0:
                 self.rango = ra.randint(0, 100)
@@ -150,6 +160,7 @@ class Cerdo(Animal):
                 self.rect.y += min(self.speed, self.target_y - self.rect.y)
             elif self.rect.y > self.target_y:
                 self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+
 class Jirafa(Animal):
     def __init__(self, vida, energia, dieta, especies,sexo):
         super().__init__(vida, energia, dieta, especies)
@@ -165,9 +176,10 @@ class Jirafa(Animal):
         self.direction = None  # Dirección inicial
         self.movimiento = True
         self.sexo = sexo
+        self.vivo = True
 
     def update(self):
-        if self.movimiento: 
+        if self.movimiento and self.vivo: 
             self.rango -= 1
             if self.rango < 0:
                 self.rango = ra.randint(0, 100)
@@ -195,6 +207,7 @@ class Jirafa(Animal):
                 self.rect.y += min(self.speed, self.target_y - self.rect.y)
             elif self.rect.y > self.target_y:
                 self.rect.y -= min(self.speed, self.rect.y - self.target_y)
+
 class Elefante(Animal):
     def __init__(self, vida, energia, dieta, especies,sexo):
         super().__init__(vida, energia, dieta, especies)
@@ -210,9 +223,10 @@ class Elefante(Animal):
         self.direction = None  # Dirección inicial
         self.movimiento = True
         self.sexo = sexo
+        self.vivo = True
 
     def update(self):
-        if self.movimiento: 
+        if self.movimiento and self.vivo: 
             self.rango -= 1
             if self.rango < 0:
                 self.rango = ra.randint(0, 100)
@@ -240,7 +254,6 @@ class Elefante(Animal):
                 self.rect.y += min(self.speed, self.target_y - self.rect.y)
             elif self.rect.y > self.target_y:
                 self.rect.y -= min(self.speed, self.rect.y - self.target_y)
-        
 
 class Jabali(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
@@ -257,9 +270,10 @@ class Jabali(Animal):
         self.direction = None  # Dirección inicial
         self.movimiento = True
         self.sexo = sexo
+        self.vivo = True
 
     def update(self):
-        if self.movimiento: 
+        if self.movimiento and self.vivo: 
             self.rango -= 1
             if self.rango < 0:
                 self.rango = ra.randint(0, 100)
@@ -288,7 +302,6 @@ class Jabali(Animal):
             elif self.rect.y > self.target_y:
                 self.rect.y -= min(self.speed, self.rect.y - self.target_y)
 
-
 class Leopardo(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies)
@@ -304,9 +317,10 @@ class Leopardo(Animal):
         self.direction = None  # Dirección inicial
         self.movimiento = True
         self.sexo = sexo
+        self.vivo = True
 
     def update(self):
-        if self.movimiento: 
+        if self.movimiento and self.vivo: 
             self.rango -= 1
             if self.rango < 0:
                 self.rango = ra.randint(0, 100)
@@ -351,9 +365,10 @@ class Suricata(Animal):
         self.direction = None  # Dirección inicial
         self.movimiento = True
         self.sexo = sexo
+        self.vivo = True
 
     def update(self):
-        if self.movimiento: 
+        if self.movimiento and self.vivo: 
             self.rango -= 1
             if self.rango < 0:
                 self.rango = ra.randint(0, 100)
@@ -382,6 +397,7 @@ class Suricata(Animal):
             elif self.rect.y > self.target_y:
                 self.rect.y -= min(self.speed, self.rect.y - self.target_y)
 
+
 class Insecto(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies)
@@ -396,10 +412,10 @@ class Insecto(Animal):
         self.rango = ra.randint(0, 500)
         self.direction = None  # Dirección inicial
         self.movimiento = True
-        self.sexo = sexo
+        self.vivo = True
 
     def update(self):
-        if self.movimiento: 
+        if self.movimiento and self.vivo: 
             self.rango -= 1
             if self.rango < 0:
                 self.rango = ra.randint(0, 100)
