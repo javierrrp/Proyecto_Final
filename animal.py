@@ -23,7 +23,7 @@ class Tigre(Animal):
     def __init__(self, vida, energia, dieta, especies, sexo):
         super().__init__(vida, energia, dieta, especies)
         self.vida = vida
-        self.image = pygame.image.load("Animales/tigre.png").convert_alpha()
+        self.image = pygame.image.load("Animales/tigre.png").convert_alpha() # importar imagen
         self.rect = self.image.get_rect()
         self.rect.x = ra.randint(0, 24) * 40 # Centrar en una casilla
         self.rect.y = ra.randint(0, 18) * 40 # Centrar en una casilla
@@ -32,14 +32,14 @@ class Tigre(Animal):
         self.speed = 1  # Velocidad baja para moverse de casilla en casilla
         self.rango = ra.randint(0, 100)
         self.direction = None  # Dirección inicial
-        self.movimiento = True
-        self.sexo = sexo
-        self.vivo = True
-        self.descomposicion = 255
+        self.movimiento = True # hacer que se mueva
+        self.sexo = sexo # definir su sexo
+        self.vivo = True # hacer que se mueva
+        self.descomposicion = 255 #transparencia de la imagen
 
     def update(self):
-        if self.vivo:
-            if self.movimiento: 
+        if self.vivo: # si el animal esta vivo hay movimiento
+            if self.movimiento: # si hay movimiento avanzara
                 self.rango -= 1
                 if self.rango < 0:
                     self.rango = ra.randint(0, 100)
