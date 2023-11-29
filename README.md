@@ -28,5 +28,16 @@ Ademas, hay tambien un "Panel de control" que permite al usuario la Inyeccion de
 
 
 
+# Requisitos Minimos
+
+-Tener Visual Studio Code Instalado 
+-Tener instalado el Python 3.11.4 instalado (Junto con la libreria Pygame)
+
+
+# Guia de Instalacion
+
+
+
+
 
 
