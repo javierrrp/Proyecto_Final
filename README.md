@@ -78,6 +78,16 @@ y lo extraen donde ustedes Quieran
 -Y Listo, ya estaria instalado el programa, solo le dan en el boton de ![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/a026585b-6452-499b-821e-993ff35343c3) y ya esta
 
 
+# Manual de Uso 
+
+![image](https://github.com/javierrrp/Proyecto_Final/assets/135164108/a7fb7ad0-65c4-47fb-bb3d-18d9fd48e57a)
+
+- El programa Tiene un  Panel de control que permite la inyeccion de eventos climaticos, como lluvia o tormenta, si uno presiona uno de esos botones, uno de esos eventos ocurrira.
+Ademas se tiene un monitoreo de los animales vivos y muertos, lo mismo con las plantas, cada vez  que un animal muera, el animal se agregara al conteo que se tiene.
+
+
+
+
 
 
 
