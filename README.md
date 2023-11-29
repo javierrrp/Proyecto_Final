@@ -90,6 +90,9 @@ Ademas se tiene un monitoreo de los animales vivos y muertos, lo mismo con las p
 
 - Por cada ciclo, la vida de los animales ira disminuyendo un 0.01, y cuando la vida de los animales sea menor o igual a 0, el animal dejara de moverse, y entra en descomposicion... Sumado a eso, se agrega el animal muerto al contador de animales muertos.
 
+- Cuando un animal se coma a otro animal (o una planta), su vida aumentara
+
+
 
 
 
